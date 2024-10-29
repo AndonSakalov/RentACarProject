@@ -24,18 +24,25 @@ body {
     background-size: 100vw 100vh;
 }
 
+div.row.text-center{
+    background-color:black;
+}
+
 .navbar-brand {
     color: blueviolet;
 }
 
 header {
-    background-color: #8FB1CC;
+    background: rgb(64,218,254);
+    background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
 }
 
 div.text-center {
-    background-color: #8FB1CC;
+    background: rgb(64,218,254);
+    background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
     border-radius: 5em;
     box-shadow: 0px 4px 10px rgba(30, 60, 90, 0.4);
+    height: 15em;
 }
 
 div.rental-info {
@@ -45,14 +52,14 @@ div.rental-info {
     margin-top: 5em;
 }
 
-div.pickup-location-partial {
+.pickup-location-partial {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 1em;
     background-color: white;
     border-radius: 1em;
-    width:15em;
+    max-width: 15em;
+    height: 3em;
 }
    
 div.rental-info p {     
@@ -69,11 +76,11 @@ input.form-control{
     border-color:white;
 }
 
-input.data-select{
+.data-select{
     border-radius: 1em;
-    margin-bottom:1em;
     border-width: inherit;
     width:15em;
+    height:3em;
 }
 
 button.search-button {
@@ -86,11 +93,41 @@ button.search-button {
     transition: 0.2s;
 }
 
-    button.search-button:hover {
-        background-color: #006af4;
-        opacity: 2;
-    }
+button.search-button:hover {
+    background-color: #da00f6;
+    opacity: 2;
+}
 
 h1.display-4{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+div.pickup-date{
+    display:flex;
+    flex-direction:column;
+}
+
+h2.found-branches-title {
+    color: navajowhite;
+    background: rgb(64,218,254);
+    background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
+    padding: 0.5em;
+    font-weight: 700;
+}
+
+div.branches-index-wrapper{
+    display: flex;
+    flex-wrap:wrap;
+    flex-direction:row;
+}
+div.h2-branches-index{
+    display:flex;
+    justify-content:center;
+    margin-top: 20px;
+    margin-bottom:20px;
+}
+
+.bg-bluegradient {
+    background: rgb(64,218,254);
+    background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
 }

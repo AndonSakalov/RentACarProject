@@ -67,6 +67,8 @@
 
             public const int PhoneNumberMinLength = 10;
             public const int PhoneNumberMaxLength = 12;
+
+            public const string RentalDateFormat = "yyyy-MM-ddTHH:mm";
         }
 
         public static class Engine

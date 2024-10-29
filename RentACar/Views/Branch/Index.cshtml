@@ -1,0 +1,52 @@
+﻿@model IEnumerable<RentACar.Web.ViewModels.BranchViewModel>;
+@{
+    ViewData["Title"] = $"Branches in {ViewBag.Message}";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<div class="h2-branches-index">
+    <h2 class="found-branches-title">@ViewData["Title"]</h2>
+</div>
+
+<div class="branches-index-wrapper">
+    @foreach (var branch in Model)
+    {
+        <div class="col-md-3 mb-4 ms-auto me-auto">
+            <div class="card h-100 bg-bluegradient" style="width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@branch.Name</h5>
+                    <p class="card-text">Address: @branch.Address</p>
+                    <p class="card-text">Vehicles: @branch.VehiclesCount</p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        <button type="submit" class="search-button">Visit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4 me-auto">
+            <div class="card h-100" style="width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@branch.Name</h5>
+                    <p class="card-text">Address: @branch.Address</p>
+                    <p class="card-text">Vehicles: @branch.VehiclesCount</p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        <button type="submit" class="search-button">Visit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4 me-auto">
+            <div class="card h-100" style="width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@branch.Name</h5>
+                    <p class="card-text">Address: @branch.Address</p>
+                    <p class="card-text">Vehicles: @branch.VehiclesCount</p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        <button type="submit" class="search-button">Visit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
