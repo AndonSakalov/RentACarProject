@@ -1,0 +1,96 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+
+body {
+    margin-bottom: 60px;
+    background-image: url(../img/background-image.jpg);
+    background-size: 100vw 100vh;
+}
+
+.navbar-brand {
+    color: blueviolet;
+}
+
+header {
+    background-color: #8FB1CC;
+}
+
+div.text-center {
+    background-color: #8FB1CC;
+    border-radius: 5em;
+    box-shadow: 0px 4px 10px rgba(30, 60, 90, 0.4);
+}
+
+div.rental-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 5em;
+}
+
+div.pickup-location-partial {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1em;
+    background-color: white;
+    border-radius: 1em;
+    width:15em;
+}
+   
+div.rental-info p {     
+    background-color: white;
+}
+
+i {
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+}
+
+input.form-control{
+    border-radius:2em;
+    border-color:white;
+}
+
+input.data-select{
+    border-radius: 1em;
+    margin-bottom:1em;
+    border-width: inherit;
+    width:15em;
+}
+
+button.search-button {
+    border-radius: 1em;
+    margin-bottom: 1em;
+    border-width: inherit;
+    background-color: white;
+    width: 10em;
+    height: 3em;
+    transition: 0.2s;
+}
+
+    button.search-button:hover {
+        background-color: #006af4;
+        opacity: 2;
+    }
+
+h1.display-4{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
