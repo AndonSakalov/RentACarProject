@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RentACar.Data;
 using RentACar.Services.Data.Interfaces;
 using RentACar.Web.ViewModels;
 
@@ -7,11 +6,9 @@ namespace RentACar.Controllers
 {
     public class BranchController : Controller
     {
-        private readonly RentACarDbContext context;
         private readonly IBranchService service;
-        public BranchController(RentACarDbContext context, IBranchService service)
+        public BranchController(IBranchService service)
         {
-            this.context = context;
             this.service = service;
         }
 
