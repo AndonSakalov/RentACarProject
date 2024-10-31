@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
+using RentACar.Services.Data.Interfaces;
 using RentACar.Web.ViewModels;
 
 namespace RentACar.Controllers
@@ -8,27 +8,20 @@ namespace RentACar.Controllers
     public class BranchController : Controller
     {
         private readonly RentACarDbContext context;
-        public BranchController(RentACarDbContext context)
+        private readonly IBranchService service;
+        public BranchController(RentACarDbContext context, IBranchService service)
         {
             this.context = context;
+            this.service = service;
         }
 
         public async Task<IActionResult> Index(SearchBranchViewModel model)
         {
             ViewBag.Message = model.City.ToString();
 
-            var foundBranches = await context.Branches
-                .Where(b => b.City == model.City)
-                .Select(b => new BranchViewModel()
-                {
-                    Name = b.Name,
-                    Address = b.Address,
-                    Country = b.Country,
-                    VehiclesCount = b.Vehicles.Count
-                })
-                .ToListAsync();
+            var outputModel = await service.GetAllOrderedByLocationAsync(model);
 
-            return View(foundBranches);
+            return View(outputModel);
         }
     }
 }

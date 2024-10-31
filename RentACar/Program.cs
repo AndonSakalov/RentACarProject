@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RentACar.Data;
 using RentACar.Data.Models;
+using RentACar.Services.Data;
+using RentACar.Web.Infrastructure;
 
 internal class Program
 {
@@ -27,7 +29,8 @@ internal class Program
             .AddSignInManager<SignInManager<ApplicationUser>>()
             .AddUserManager<UserManager<ApplicationUser>>();
 
-
+        builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
+        builder.Services.RegisterServices(typeof(BranchService).Assembly);
 
         builder.Services.AddControllersWithViews();
         builder.Services.AddRazorPages();
