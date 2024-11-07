@@ -5,6 +5,9 @@ namespace RentACar.Web.ViewModels
     public class BranchViewModel
     {
         [Required]
+        public string Id { get; set; } = null!;
+
+        [Required]
         public string Name { get; set; } = null!;
 
         [Required]

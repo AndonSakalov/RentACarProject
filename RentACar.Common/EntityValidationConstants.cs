@@ -49,6 +49,9 @@
             public const int NameMaxLength = 20;
 
             public const int DescriptionMaxLength = 500;
+
+            public const int ImageUrlMaxLength = 2048;
+            public const string NoImageUrl = "/img/no-image.jpg";
         }
 
         public static class Branch

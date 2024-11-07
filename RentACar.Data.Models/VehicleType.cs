@@ -21,6 +21,11 @@ namespace RentACar.Data.Models
         [Comment("Name of the vehicle type.")]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [MaxLength(ImageUrlMaxLength)]
+        [Comment("The image url of the vehicle type.")]
+        public string ImageUrl { get; set; } = null!;
+
         [MaxLength(DescriptionMaxLength)]
         [Comment("Description of the vehicle type.")]
         public string? Description { get; set; }

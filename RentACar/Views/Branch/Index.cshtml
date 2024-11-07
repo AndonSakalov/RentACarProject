@@ -9,20 +9,22 @@
     <h2 class="found-branches-title">@ViewData["Title"]</h2>
 </div>
 
+ <form asp-action="VehicleType" method="get">
 <div class="branches-index-wrapper">
     @foreach (var branch in Model)
-    {
-        <div class="col-md-3 mb-4 ms-auto me-auto">
-            <div class="card h-100 bg-bluegradient" style="width: 100%;">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">@branch.Name</h5>
-                    <p class="card-text">Address: @branch.Address</p>
-                    <p class="card-text">Vehicles: @branch.VehiclesCount</p>
-                    <div class="d-flex justify-content-between mt-auto">
-                        <button type="submit" class="search-button">Visit</button>
+    {      
+            <div class="col-md-3 mb-4 ms-auto me-auto">
+                <div class="card h-100 bg-bluegradient" style="width: 100%;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@branch.Name</h5>
+                        <p class="card-text">Address: @branch.Address</p>
+                        <p class="card-text">Vehicles: @branch.VehiclesCount</p>
+                        <div class="d-flex justify-content-between mt-auto">
+                            <a asp-controller="Branch" asp-action="VehicleType" asp-route-id="@branch.Id" class="btn btn-info w-100">Visit</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     }
+        </form>
 </div>

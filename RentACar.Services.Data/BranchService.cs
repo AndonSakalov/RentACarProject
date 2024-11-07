@@ -20,6 +20,7 @@ namespace RentACar.Services.Data
                .Where(b => b.City == model.City)
                .Select(b => new BranchViewModel()
                {
+                   Id = b.Id.ToString(),
                    Name = b.Name,
                    Address = b.Address,
                    Country = b.Country,
@@ -28,6 +29,41 @@ namespace RentACar.Services.Data
                .ToListAsync();
 
             return foundBranches;
+        }
+
+        public async Task<IEnumerable<VehicleTypeViewModel>> GetAllVehicleTypesAsync(string id)
+        {
+            Guid parsedGuid = Guid.Empty;
+            bool isGuidValid = IsGuidValid(id, ref parsedGuid);
+
+            if (!isGuidValid)
+            {
+                return null;
+            }
+
+            var currentBranch = await branchRepository.GetAllAttached()
+                .Include(b => b.Vehicles)
+                .ThenInclude(v => v.VehicleType)
+                .SingleOrDefaultAsync(b => b.Id == parsedGuid);
+
+            if (currentBranch == null)
+            {
+                return null;
+            }
+
+            List<VehicleTypeViewModel> vehicleTypes = currentBranch.Vehicles
+                 .Select(v => new VehicleTypeViewModel()
+                 {
+                     Name = v.VehicleType.Name,
+                     Description = v.VehicleType.Description,
+                     ImageUrl = v.VehicleType.ImageUrl
+                 })
+                 .GroupBy(vt => vt.Name)
+                 .Select(g => g.First())
+                 .ToList();
+
+            return vehicleTypes;
+
         }
     }
 }
