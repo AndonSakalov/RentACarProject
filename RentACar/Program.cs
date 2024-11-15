@@ -7,7 +7,7 @@ using RentACar.Web.Infrastructure;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,11 @@ internal class Program
             .AddSignInManager<SignInManager<ApplicationUser>>()
             .AddUserManager<UserManager<ApplicationUser>>();
 
+        builder.Services.ConfigureApplicationCookie(cfg =>
+        {
+            cfg.LoginPath = "/Identity/Account/Login";
+        });
+
         builder.Services.RegisterRepositories(typeof(ApplicationUser).Assembly);
         builder.Services.RegisterServices(typeof(BranchService).Assembly);
 
@@ -36,6 +41,8 @@ internal class Program
         builder.Services.AddRazorPages();
 
         var app = builder.Build();
+
+        EnsureRolesAsync(app.Services);
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -64,6 +71,24 @@ internal class Program
 
         app.Run();
     }
+
+    private static async void EnsureRolesAsync(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+        var roles = new[] { "Admin", "Staff", "Customer" };
+
+        foreach (var role in roles)
+        {
+            if (!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole<Guid>(role));
+            }
+        }
+    }
 }
+
+
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<RentACarDbContext>();

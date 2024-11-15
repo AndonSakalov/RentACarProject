@@ -5,8 +5,8 @@
 <head>
     <link rel="stylesheet" href="~/css/site.css">
 </head>
-<div class="h2-branches-index">
-    <h2 class="found-branches-title">@ViewData["Title"]</h2>
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
 </div>
 
  <form asp-action="VehicleType" method="get">
@@ -20,7 +20,11 @@
                         <p class="card-text">Address: @branch.Address</p>
                         <p class="card-text">Vehicles: @branch.VehiclesCount</p>
                         <div class="d-flex justify-content-between mt-auto">
-                            <a asp-controller="Branch" asp-action="VehicleType" asp-route-id="@branch.Id" class="btn btn-info w-100">Visit</a>
+                            <a asp-controller="Branch" asp-action="VehicleType"
+                               asp-route-id="@branch.Id"
+                               asp-route-pickupDate="@branch.PickUpDate"
+                               asp-route-returnDate="@branch.ReturnDate"
+                               class="btn btn-info w-100">Visit</a>
                         </div>
                     </div>
                 </div>

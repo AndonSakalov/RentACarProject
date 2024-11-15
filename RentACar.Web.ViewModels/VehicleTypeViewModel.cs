@@ -9,5 +9,14 @@ namespace RentACar.Web.ViewModels
         public string? Description { get; set; }
         [Required]
         public string ImageUrl { get; set; } = null!;
+
+        [Required]
+        public string PickUpDate { get; set; } = null!;
+
+        [Required]
+        public string ReturnDate { get; set; } = null!;
+
+        [Required]
+        public string BranchId { get; set; } = null!;
     }
 }

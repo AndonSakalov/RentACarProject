@@ -28,6 +28,12 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search Branches</a>
 						</li>
+						@if (User.IsInRole("Staff"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add vehicle to the system</a>
+							</li>
+						}
 					</ul>
 					<partial name="_LoginPartial" />
 				</div>

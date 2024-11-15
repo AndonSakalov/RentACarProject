@@ -5,20 +5,25 @@
 <head>
     <link rel="stylesheet" href="~/css/site.css">
 </head>
-<div class="h2-branches-index">
-    <h2 class="found-branches-title">@ViewData["Title"]</h2>
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
 </div>
 
 <div class="branches-index-wrapper">
-    @foreach (var branch in Model)
+    @foreach (var vehicleType in Model)
     {
         <div class="col-md-3 mb-4 ms-auto me-auto">
             <div class="card h-100 bg-bluegradient" style="width: 100%;">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">@branch.Name</h5>
-                    <img src="@branch.ImageUrl"/>
+                    <h5 class="card-title">@vehicleType.Name</h5>
+                    <img src="@vehicleType.ImageUrl" />
                     <div class="d-flex justify-content-between mt-auto">
-                        <button type="submit" class="search-button">Select</button>
+                        <a asp-controller="Branch" asp-action="Vehicles"
+                           asp-route-id="@vehicleType.BranchId"
+                           asp-route-pickupDate="@vehicleType.PickUpDate"
+                           asp-route-returnDate="@vehicleType.ReturnDate"
+                           asp-route-vehicleTypeName="@vehicleType.Name"
+                           class="btn btn-info w-100">Select</a>
                     </div>
                 </div>
             </div>

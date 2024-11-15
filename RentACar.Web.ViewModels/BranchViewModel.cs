@@ -18,5 +18,11 @@ namespace RentACar.Web.ViewModels
 
         [Required]
         public int VehiclesCount { get; set; }
+
+        [Required]
+        public string PickUpDate { get; set; } = null!;
+
+        [Required]
+        public string ReturnDate { get; set; } = null!;
     }
 }

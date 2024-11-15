@@ -17,17 +17,20 @@ namespace RentACar.Areas.Identity.Pages.Account
 		private readonly IUserStore<ApplicationUser> _userStore;
 		//private readonly IUserEmailStore<ApplicationUser> _emailStore;
 		private readonly ILogger<RegisterModel> _logger;
+		private readonly IConfiguration configuration;
 		//private readonly IEmailSender _emailSender;
 
 		public RegisterModel(
 			UserManager<ApplicationUser> userManager,
 			IUserStore<ApplicationUser> userStore,
 			SignInManager<ApplicationUser> signInManager,
-			ILogger<RegisterModel> logger)
+			ILogger<RegisterModel> logger,
+			IConfiguration configuration)
 		//IEmailSender emailSender)
 		{
 			_userManager = userManager;
 			_userStore = userStore;
+			this.configuration = configuration;
 			//_emailStore = GetEmailStore();
 			_signInManager = signInManager;
 			_logger = logger;
@@ -91,6 +94,11 @@ namespace RentACar.Areas.Identity.Pages.Account
 			[Display(Name = "Confirm password")]
 			[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 			public string ConfirmPassword { get; set; }
+
+
+			[StringLength(20)]
+			[Display(Name = "Staff register code")]
+			public string SpecialCode { get; set; }
 		}
 
 
@@ -106,6 +114,7 @@ namespace RentACar.Areas.Identity.Pages.Account
 			//ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 			if (ModelState.IsValid)
 			{
+
 				var user = CreateUser();
 
 				user.Email = Input.Email;
@@ -116,6 +125,26 @@ namespace RentACar.Areas.Identity.Pages.Account
 
 				if (result.Succeeded)
 				{
+					if (Input.SpecialCode != null)
+					{
+						var validSpecialCode = configuration["StaffMembersRegisteringCode:Staff"];
+
+						if (Input.SpecialCode == validSpecialCode)
+						{
+							await _userManager.AddToRoleAsync(user, "Staff");
+						}
+						else
+						{
+							await _userManager.AddToRoleAsync(user, "Customer");
+						}
+					}
+					else
+					{
+						// Default role assignment
+						await _userManager.AddToRoleAsync(user, "Customer");
+					}
+
+					//user.SecurityStamp = await _userManager.GetSecurityStampAsync(user);
 					_logger.LogInformation("User created a new account with password.");
 
 					var userId = await _userManager.GetUserIdAsync(user);

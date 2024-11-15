@@ -107,7 +107,7 @@ div.pickup-date{
     flex-direction:column;
 }
 
-h2.found-branches-title {
+h1.found-branches-title {
     color: navajowhite;
     background: rgb(64,218,254);
     background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
@@ -120,7 +120,7 @@ div.branches-index-wrapper{
     flex-wrap:wrap;
     flex-direction:row;
 }
-div.h2-branches-index{
+div.header{
     display:flex;
     justify-content:center;
     margin-top: 20px;
@@ -130,4 +130,116 @@ div.h2-branches-index{
 .bg-bluegradient {
     background: rgb(64,218,254);
     background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
+}
+
+div.filters{
+    display:flex;
+    flex-direction:column;
+    background-color:cornflowerblue;
+    width: 25vw;
+    height: 63vh;
+    margin-right: 5em;
+}
+
+div.filters-header{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-evenly;
+    border-bottom:solid;
+    border-color:bisque;
+    align-items:baseline;
+}
+
+div.filters-header a{
+    font-size:1.2em;
+    color:blue;
+    text-decoration:none;
+}
+
+div.apply-filters-button{
+    display:flex;
+    justify-content:center;
+}
+
+div.filters-body div h4{
+    display:flex;
+    justify-content:center;
+}
+
+div.filters-body{
+    display:flex;
+    flex-direction:column;
+}
+
+div.filters-body input{
+    width:20px;
+    margin-right:7px;
+    margin-left:10px;
+}
+
+div.filters-body div div {
+    display:flex;
+    flex-direction:row;
+}
+
+div.vehicles-list div.vehicle img {
+    height:11em;
+    width: 10em;
+    margin: 0em;
+}
+
+div.vehicle-list-wrapper{
+    display:flex;
+    flex-direction:row;
+}
+
+div.vehicles-list {
+    display: flex;
+    flex-direction: column;
+    max-width: 40vw;
+    overflow: scroll;
+    height: 63vh;
+    background-color: aliceblue;
+    padding-inline: 2em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+div.vehicle{
+    display:flex;
+    flex-direction:row;
+    border:solid;
+    margin-bottom: 0.5em;
+    background-color:white;
+    margin-top:2em;
+}
+
+div.test {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5em;
+    background-color: white;
+    align-items: baseline;
+}
+
+div.vehicle-info{
+    display:flex;
+    align-content:space-evenly;
+    flex-direction:column;
+    flex-wrap:wrap;
+    margin-left: 1em;
+}
+
+div.car-rental-info {
+    display: flex;
+    flex-direction: column;
+    margin-left:2em;
+    margin-right: 2em;
+    justify-content:space-evenly;
+}
+
+div.home-h1{
+    display:flex;
+    justify-content:center;
+    color:cornflowerblue;
 }

@@ -102,5 +102,7 @@ namespace RentACar.Data.Models
         public Guid? RentalId { get; set; }
         public virtual Rental? Rental { get; set; }
         public bool IsDeleted { get; set; }
+
+        public bool IsRented { get; set; }
     }
 }

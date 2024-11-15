@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RentACar.Common\RentACar.Common.csproj" />
+    <ProjectReference Include="..\RentACar.Data.Models\RentACar.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

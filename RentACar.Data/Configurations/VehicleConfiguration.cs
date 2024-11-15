@@ -19,6 +19,9 @@ namespace RentACar.Data.Configurations
                 .ValueGeneratedOnAdd();
 
             builder.HasData(SeedVehicles());
+
+            builder.Property(v => v.IsRented)
+                .HasDefaultValue(false);
         }
 
         private ICollection<Vehicle> SeedVehicles()
