@@ -1,0 +1,50 @@
+﻿@model RentACar.Web.ViewModels.SearchUserViewModel;
+@{
+	ViewData["Title"] = "Promote User to Staff";
+}
+
+<h2>Promote User to Staff</h2>
+
+<form method="post" action="SearchUsers">
+	<div class="form-group">
+		<label for="email">Email:</label>
+		<input asp-for="Email" class="form-control" placeholder="Email..." />
+	</div>
+	<button type="submit" class="btn btn-primary">Search</button>
+</form>
+@if (Model != null)
+{
+	@if (Model.IsFound == true && Model.Username != null)
+	{
+		<div class="vehicles-list">
+			@{
+				<div class="vehicle">
+					<div class="test">
+						<div class="vehicle-info">
+							<p class="vehicle-name">@Model.Username</p>
+							<p class="seats-count">@Model.Email</p>
+						</div>
+					</div>
+					<div class="car-rental-info">
+						<form method="post" action="PromoteToStaff">
+							<form method="post" action="PromoteToStaff">
+								<input type="hidden" name="Email" value="@Model.Email" />
+								<input type="hidden" name="Username" value="@Model.Username" />
+								<input type="hidden" name="UserId" value="@Model.UserId" />
+								<input type="hidden" name="IsFound" value="@Model.IsFound" />
+								<button type="submit" class="btn btn-primary">Promote to staff member</button>
+							</form>
+						</form>
+					</div>
+				</div>
+			}
+		</div>
+	}
+	else
+	{
+		<h3>
+			User not found!
+		</h3>
+	}
+}
+

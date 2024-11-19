@@ -28,10 +28,16 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Search Branches</a>
 						</li>
-						@if (User.IsInRole("Staff"))
+						@if (User.IsInRole("Staff") || User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add vehicle to the system</a>
+							</li>
+						}
+						@if (User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="UserManagement" asp-action="SearchUsers">Promote account to staff member</a>
 							</li>
 						}
 					</ul>

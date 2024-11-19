@@ -38,7 +38,7 @@ namespace RentACar.Controllers
 		public async Task<IActionResult> Vehicles(string id, string pickupDate, string returnDate, string vehicleTypeName)
 		{
 
-			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesForCurrentBranch(id, pickupDate, returnDate, vehicleTypeName);
+			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesForCurrentBranchAsync(id, pickupDate, returnDate, vehicleTypeName);
 
 			if (outputModel == null)
 			{
@@ -66,7 +66,7 @@ namespace RentACar.Controllers
 		public async Task<IActionResult> FilteredVehicles(VehicleFilterViewModel filters)
 		{
 
-			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesFiltered(filters);
+			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesFilteredAsync(filters);
 
 			if (outputModel == null)
 			{

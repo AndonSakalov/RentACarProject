@@ -71,7 +71,7 @@ i {
     padding-right: 0.1em;
 }
 
-input.form-control{
+input.form-control, select.form-control{
     border-radius:2em;
     border-color:white;
 }
@@ -242,4 +242,8 @@ div.home-h1{
     display:flex;
     justify-content:center;
     color:cornflowerblue;
+}
+
+#add-vehicle{
+    color:chartreuse;
 }

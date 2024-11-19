@@ -1,71 +1,71 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RentACar.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using static RentACar.Common.EntityValidationConstants.Vehicle;
+using static RentACar.Common.EntityValidationErrorMessages.Vehicle;
 namespace RentACar.Web.ViewModels
 {
-    public class AddVehicleViewModel
-    {
-        [Required]
-        public Guid MakeId { get; set; }
-        public List<Make> Makes { get; set; } = new List<Make>();
+	public class AddVehicleViewModel
+	{
+		[Required]
+		public Guid MakeId { get; set; } = new Guid();
+		public List<AddVehicleMakeViewModel> Makes { get; set; } = new List<AddVehicleMakeViewModel>();
 
-        [Required]
-        [MinLength(ColorMinLength)]
-        [MaxLength(ColorMaxLength)]
-        public string Color { get; set; } = null!;
+		[Required]
+		[MinLength(ColorMinLength, ErrorMessage = ColorIsRequired)]
+		[MaxLength(ColorMaxLength)]
+		public string Color { get; set; } = null!;
 
-        [Required]
-        [MinLength(ModelMinLength)]
-        [MaxLength(ModelMaxLength)]
-        public string Model { get; set; } = null!;
+		[Required]
+		[MinLength(ModelMinLength)]
+		[MaxLength(ModelMaxLength)]
+		public string Model { get; set; } = null!;
 
-        [Required]
-        public Guid VehicleId { get; set; }
-        public List<VehicleType> VehicleTypes { get; set; } = new List<VehicleType>();
+		[Required]
+		public Guid VehicleTypeId { get; set; }
+		public List<AddVehicleVehicleTypeViewModel> VehicleTypes { get; set; } = new List<AddVehicleVehicleTypeViewModel>();
 
-        [Required]
-        public Guid TransmissionId { get; set; }
-        public List<Transmission> Transmissions { get; set; } = new List<Transmission>();
+		[Required]
+		public Guid TransmissionId { get; set; }
+		public List<AddVehicleTransmissionViewModel> Transmissions { get; set; } = new List<AddVehicleTransmissionViewModel>();
 
-        [Required]
-        [Range(SeatsMinCount, SeatsMaxCount)]
-        public int SeatsCount { get; set; }
+		[Required]
+		[Range(SeatsMinCount, SeatsMaxCount)]
+		public int SeatsCount { get; set; }
 
-        [Required]
-        [Range(DoorsMinCount, DoorsMaxCount)]
-        public int DoorsCount { get; set; }
+		[Required]
+		[Range(DoorsMinCount, DoorsMaxCount)]
+		public int DoorsCount { get; set; }
 
-        [Required]
-        public string Year { get; set; } = null!;
+		[Required]
+		public string Year { get; set; } = null!;
 
-        [Required]
-        [Range(MileageMinNumber, MileageMaxNumber)]
-        public int Mileage { get; set; }
+		[Required]
+		[Range(MileageMinNumber, MileageMaxNumber)]
+		public int Mileage { get; set; }
 
-        [MinLength(RegistrationMinLength)]
-        [MaxLength(RegistrationMaxLength)]
-        public string? RegistrationNumber { get; set; }
+		[MinLength(RegistrationMinLength)]
+		[MaxLength(RegistrationMaxLength)]
+		public string? RegistrationNumber { get; set; }
 
-        [MinLength(ImageUrlMinLength)]
-        [MaxLength(ImageUrlMaxLength)]
-        public string? ImageUrl { get; set; }
+		[MinLength(ImageUrlMinLength)]
+		[MaxLength(ImageUrlMaxLength)]
+		public string? ImageUrl { get; set; }
 
-        [MinLength(VINNumberMinLength)]
-        [MaxLength(VINNumberMaxLength)]
-        public string? VINNumber { get; set; }
+		[MinLength(VINNumberMinLength)]
+		[MaxLength(VINNumberMaxLength)]
+		public string? VINNumber { get; set; }
 
-        [Required]
-        public Guid BranchId { get; set; }
-        public List<Branch> Branches { get; set; } = new List<Branch>();
+		[Required]
+		public Guid BranchId { get; set; }
+		public List<AddVehicleBranchViewModel> Branches { get; set; } = new List<AddVehicleBranchViewModel>();
 
-        [Required]
-        public Guid EngineId { get; set; }
-        public List<Engine> Engines { get; set; } = new List<Engine>();
+		[Required]
+		public Guid EngineId { get; set; }
+		public List<AddVehicleEngineViewModel> Engines { get; set; } = new List<AddVehicleEngineViewModel>();
 
-        [Required]
-        [Range(PricePerDayMinValue, PricePerDayMaxValue)]
-        [Precision(18, 2)]
-        public decimal PricePerDay { get; set; }
-    }
+		[Required]
+		[Range(PricePerDayMinValue, PricePerDayMaxValue)]
+		[Precision(18, 2)]
+		public decimal PricePerDay { get; set; }
+	}
 }

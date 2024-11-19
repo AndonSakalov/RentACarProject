@@ -23,6 +23,7 @@ internal class Program
         {
             options.SignIn.RequireConfirmedAccount = false;
             options.SignIn.RequireConfirmedEmail = false;
+            options.User.RequireUniqueEmail = true;
         })
             .AddEntityFrameworkStores<RentACarDbContext>()
             .AddRoles<IdentityRole<Guid>>()

@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using RentACar.Data.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -30,7 +31,6 @@ namespace RentACar.Areas.Identity.Pages.Account
 		{
 			_userManager = userManager;
 			_userStore = userStore;
-			this.configuration = configuration;
 			//_emailStore = GetEmailStore();
 			_signInManager = signInManager;
 			_logger = logger;
@@ -69,6 +69,7 @@ namespace RentACar.Areas.Identity.Pages.Account
 			[Required]
 			[EmailAddress]
 			[Display(Name = "Email")]
+
 			public string Email { get; set; }
 
 			[Required]
@@ -94,11 +95,6 @@ namespace RentACar.Areas.Identity.Pages.Account
 			[Display(Name = "Confirm password")]
 			[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
 			public string ConfirmPassword { get; set; }
-
-
-			[StringLength(20)]
-			[Display(Name = "Staff register code")]
-			public string SpecialCode { get; set; }
 		}
 
 
@@ -112,11 +108,17 @@ namespace RentACar.Areas.Identity.Pages.Account
 		{
 			returnUrl ??= Url.Content("~/");
 			//ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+			if (!await IsEmailUniqueAsync(Input.Email))
+			{
+				ModelState.AddModelError(nameof(Input.Email), "There is already existing account with this email.");
+			}
+			//TODO:Display the error
+
 			if (ModelState.IsValid)
 			{
-
 				var user = CreateUser();
 
+				_userManager.AddToRoleAsync(user, "Customer");
 				user.Email = Input.Email;
 
 				await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
@@ -125,25 +127,6 @@ namespace RentACar.Areas.Identity.Pages.Account
 
 				if (result.Succeeded)
 				{
-					if (Input.SpecialCode != null)
-					{
-						var validSpecialCode = configuration["StaffMembersRegisteringCode:Staff"];
-
-						if (Input.SpecialCode == validSpecialCode)
-						{
-							await _userManager.AddToRoleAsync(user, "Staff");
-						}
-						else
-						{
-							await _userManager.AddToRoleAsync(user, "Customer");
-						}
-					}
-					else
-					{
-						// Default role assignment
-						await _userManager.AddToRoleAsync(user, "Customer");
-					}
-
 					//user.SecurityStamp = await _userManager.GetSecurityStampAsync(user);
 					_logger.LogInformation("User created a new account with password.");
 
@@ -186,6 +169,11 @@ namespace RentACar.Areas.Identity.Pages.Account
 			}
 		}
 
+		private async Task<bool> IsEmailUniqueAsync(string email)
+		{
+			return !await _userManager.Users.AnyAsync(u => u.Email == email);
+		}
+
 		//private IUserEmailStore<IdentityUser> GetEmailStore()
 		//{
 		//    if (!_userManager.SupportsUserEmail)
@@ -194,5 +182,6 @@ namespace RentACar.Areas.Identity.Pages.Account
 		//    }
 		//    return (IUserEmailStore<IdentityUser>)_userStore;
 		//}
+
 	}
 }

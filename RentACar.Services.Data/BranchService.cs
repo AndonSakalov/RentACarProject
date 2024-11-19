@@ -10,7 +10,7 @@ namespace RentACar.Services.Data
 {
 	public class BranchService : BaseService, IBranchService
 	{
-		private IRepository<Branch, Guid> branchRepository;
+		private readonly IRepository<Branch, Guid> branchRepository;
 
 		public BranchService(IRepository<Branch, Guid> repository)
 		{
@@ -87,7 +87,7 @@ namespace RentACar.Services.Data
 
 		}
 
-		public async Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesForCurrentBranch(string id, string pickupDate, string returnDate, string vehicleTypeName)
+		public async Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesForCurrentBranchAsync(string id, string pickupDate, string returnDate, string vehicleTypeName)
 		{
 			bool isPickupDateValid = DateTime.TryParseExact(pickupDate, RentalDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime validPickupDate);
 
@@ -144,7 +144,7 @@ namespace RentACar.Services.Data
 			return outputModel;
 		}
 
-		public async Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesFiltered(VehicleFilterViewModel model)
+		public async Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesFilteredAsync(VehicleFilterViewModel model)
 		{
 			bool isPickupDateValid = DateTime.TryParseExact(model.PickupDate, RentalDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime validPickupDate);
 
@@ -243,6 +243,24 @@ namespace RentACar.Services.Data
 			}
 
 			return outputModel;
+		}
+
+		public async Task<IEnumerable<AddVehicleBranchViewModel>> GetAllBranchesAsync()
+		{
+			var allBranches = (await branchRepository.GetAllAsync())
+				.ToList()
+				.Select(b => new AddVehicleBranchViewModel()
+				{
+					Id = b.Id,
+					Name = b.Name,
+					Address = b.Address,
+					City = b.City,
+					Country = b.Country
+				});
+
+
+
+			return allBranches;
 		}
 	}
 }
