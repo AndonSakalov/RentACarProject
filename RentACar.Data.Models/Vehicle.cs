@@ -56,6 +56,7 @@ namespace RentACar.Data.Models
 
 		[Required]
 		[Comment("Year of manufacturing.")]
+		[Range(YearMinRange, YearMaxRange)]
 		public int Year { get; set; }
 
 		[Required]
@@ -102,7 +103,6 @@ namespace RentACar.Data.Models
 		public Guid? RentalId { get; set; }
 		public virtual Rental? Rental { get; set; }
 		public bool IsDeleted { get; set; }
-
 		public bool IsRented { get; set; }
 	}
 }

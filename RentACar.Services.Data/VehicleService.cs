@@ -42,7 +42,7 @@ namespace RentACar.Services.Data
 
                 if (make == null || vehicleType == null || transmission == null || branch == null || engine == null)
                 {
-                    throw new Exception("HTML tampering!");
+                    throw new ArgumentException("Invalid input data.");
                 }
 
                 Vehicle vehicleToCreate = new Vehicle()
@@ -54,7 +54,7 @@ namespace RentACar.Services.Data
                     TransmissionId = model.TransmissionId,
                     SeatsCount = model.SeatsCount,
                     DoorsCount = model.DoorsCount,
-                    Year = model.Year, //int
+                    Year = model.Year,
                     Mileage = model.Mileage,
                     RegistrationNumber = model.RegistrationNumber,
                     ImageUrl = model.ImageUrl,

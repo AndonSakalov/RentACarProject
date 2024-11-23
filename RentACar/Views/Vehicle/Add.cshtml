@@ -38,35 +38,38 @@
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.Model" class="form-label-add-edit">Select Model...</label>
 			<input asp-for="Model" class="form-control" placeholder="Vehicle Model..." />
+			<span asp-validation-for="@Model.Model" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.TransmissionId" class="form-label-add-edit">Select Vehicle Transmission...</label>
 			<select asp-for="@Model.TransmissionId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Transmissions, "Id", "DisplayName"))">
-				<option value="">Select Vehicle Type...</option>
+				<option value="">Select Vehicle Transmission...</option>
 			</select>
 			<span asp-validation-for="@Model.TransmissionId" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.SeatsCount" class="form-label-add-edit">Select Vehicle Seats count...</label>
 			<select asp-for="@Model.SeatsCount" class="form-control" aria-required="true" asp-items="@(new SelectList(new int[] {2,5,7}))">
-				<option value="">Select Vehicle Type...</option>
+				<option value="">Select Vehicle Seats Count...</option>
 			</select>
 			<span asp-validation-for="@Model.SeatsCount" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.DoorsCount" class="form-label-add-edit">Select Vehicle Doors count...</label>
 			<select asp-for="@Model.DoorsCount" class="form-control" aria-required="true" asp-items="@(new SelectList(new int[] {2,4}))">
-				<option value="">Select Vehicle Type...</option>
+				<option value="">Select Vehicle Doors Count...</option>
 			</select>
 			<span asp-validation-for="@Model.DoorsCount" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.Year" class="form-label-add-edit">Select Year...</label>
 			<input asp-for="Year" class="form-control" placeholder="Vehicle Year..." />
+			<span asp-validation-for="@Model.Year" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.Mileage" class="form-label-add-edit">Select Mileage...</label>
 			<input asp-for="Mileage" class="form-control" placeholder="Vehicle Mileage..." />
+			<span asp-validation-for="@Model.Mileage" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.RegistrationNumber" class="form-label-add-edit">Select Registration Number...</label>

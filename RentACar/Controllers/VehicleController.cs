@@ -56,7 +56,7 @@ namespace RentACar.Controllers
                 var selectedBranch = vehicleModel.Branches
                     .FirstOrDefault(b => b.Id == vehicleModel.BranchId);
 
-                if (selectedMake != null || selectedBranch != null)
+                if (selectedMake != null && selectedBranch != null)
                 {
                     TempData["Message"] = $"You have successfully added {selectedMake.Name} {vehicleModel.Model} to {selectedBranch.Name}.";
                     TempData["MessageType"] = "Success";
