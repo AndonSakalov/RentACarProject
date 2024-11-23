@@ -26,6 +26,7 @@
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.Color" class="form-label-add-edit">Select Color...</label>
 			<input asp-for="Color" class="form-control" placeholder="Vehicle color..." />
+			<span asp-validation-for="@Model.Color" class="text-danger"></span>
 		</div>
 		<div class="col-sm-6 mb-2">
 			<label asp-for="@Model.VehicleTypeId" class="form-label-add-edit">Select Vehicle Type...</label>
@@ -85,6 +86,11 @@
 				<option value="">Select Branch...</option>
 			</select>
 			<span asp-validation-for="@Model.BranchId" class="text-danger"></span>
+		</div>
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.PricePerDay" class="form-label-add-edit">Select Price per day...</label>
+			<input asp-for="PricePerDay" class="form-control" placeholder="Vehicle price..." />
+			<span asp-validation-for="@Model.PricePerDay" class="text-danger"></span>
 		</div>
 	</div>
 

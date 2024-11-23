@@ -256,7 +256,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Branches");
+                    b.ToTable("Branches", (string)null);
 
                     b.HasData(
                         new
@@ -368,7 +368,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Engines");
+                    b.ToTable("Engines", (string)null);
 
                     b.HasData(
                         new
@@ -454,7 +454,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Makes");
+                    b.ToTable("Makes", (string)null);
 
                     b.HasData(
                         new
@@ -545,7 +545,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Models.Rental", b =>
@@ -587,7 +587,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasIndex("PaymentId");
 
-                    b.ToTable("Rentals");
+                    b.ToTable("Rentals", (string)null);
                 });
 
             modelBuilder.Entity("RentACar.Data.Models.Transmission", b =>
@@ -607,7 +607,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transmissions");
+                    b.ToTable("Transmissions", (string)null);
 
                     b.HasData(
                         new
@@ -752,7 +752,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasIndex("VehicleTypeId");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
 
                     b.HasData(
                         new
@@ -873,7 +873,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleTypes");
+                    b.ToTable("VehicleTypes", (string)null);
 
                     b.HasData(
                         new

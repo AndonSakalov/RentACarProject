@@ -5,3 +5,24 @@
 	<h1>Rent a car and enjoy your trip!</h1>
 </div>
 
+@if (TempData["Message"] != null)
+{
+    string messageType = TempData["MessageType"]?.ToString();
+    string alertClass = messageType == "Success" ? "alert-success" : "alert-danger"; // Bootstrap classes
+    <div id="messageBox" class="alert @alertClass" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const messageBox = document.getElementById("messageBox");
+        if (messageBox) {
+            setTimeout(() => {
+                messageBox.style.transition = "opacity 1s ease-out";
+                messageBox.style.opacity = "0";
+                setTimeout(() => messageBox.remove(), 1000); 
+            }, 3000); 
+        }
+    });
+</script>
