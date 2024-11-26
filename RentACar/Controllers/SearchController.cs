@@ -15,7 +15,7 @@ namespace RentACar.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
         [HttpPost]
@@ -45,7 +45,7 @@ namespace RentACar.Controllers
 
             var compareToDateTimeNow = DateTime.Compare(validPickupDate, DateTime.Now);
 
-            if (result < 0)
+            if (compareToDateTimeNow < 0)
             {
                 ModelState.AddModelError(nameof(model.PickUpDate), PickUpDateIsBeforeCurrentDate);
                 return this.View(model);
@@ -53,5 +53,25 @@ namespace RentACar.Controllers
 
             return RedirectToAction(nameof(Index), "Branch", model);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Staff, Admin")]
+        public IActionResult StaffSearch()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Staff, Admin")]
+        public IActionResult StaffSearch(StaffSearchViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            return RedirectToAction("StaffSearchBranches", "Branch", model);
+        }
+
     }
 }

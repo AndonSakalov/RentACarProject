@@ -1,0 +1,117 @@
+﻿@model IEnumerable<RentACar.Web.ViewModels.EditVehicleListViewModel>;
+
+@{
+	if (Model.Count() == 0)
+	{
+		<div class="header">
+			<h1 class="found-branches-title">@ViewData["Title"]</h1>
+		</div>
+	}
+	else
+	{
+		<div class="header">
+			<h1 class="found-branches-title">@ViewData["Title"]</h1>
+		</div>
+	}
+}
+
+
+<div class="vehicle-list-wrapper">
+	<div class="filters">
+		<div class="filters-header">
+			<h2>Filter</h2>
+			<a asp-controller="Vehicle" asp-action="Vehicles"
+			   asp-route-branchId="@ViewData["BranchId"]"
+			>Clear all filters</a>
+		</div>
+
+		<div class="filters-body">
+			<form method="get" asp-controller="Vehicle" asp-action="FilteredVehicles">
+				<input type="hidden" name="BranchId" value="@ViewData["BranchId"]" />
+				<div class="vehicle-type-filters">
+					<h4>Vehicle type:</h4>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter1" name="VehicleType" value="Sedan">
+						<label for="vehicle-type-filter1">Sedan</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter2" name="VehicleType" value="Convertible">
+						<label for="vehicle-type-filter2">Convertible</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter3" name="VehicleType" value="Jeep">
+						<label for="vehicle-type-filter3">Jeep</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter4" name="VehicleType" value="Limousine">
+						<label for="vehicle-type-filter4">Limousine</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter5" name="VehicleType" value="Pickup Truck">
+						<label for="vehicle-type-filter5">Pickup Truck</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter6" name="VehicleType" value="Crossover">
+						<label for="vehicle-type-filter6">Crossover</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter7" name="VehicleType" value="Muscle Car">
+						<label for="vehicle-type-filter7">Muscle Car</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter8" name="VehicleType" value="Hatchback">
+						<label for="vehicle-type-filter8">Hatchback</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter9" name="VehicleType" value="Sportscar">
+						<label for="vehicle-type-filter9">Sportscar</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter10" name="VehicleType" value="Coupe">
+						<label for="vehicle-type-filter10">Coupe</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter11" name="VehicleType" value="SUV">
+						<label for="vehicle-type-filter11">SUV</label>
+					</div>
+					<div>
+						<input type="checkbox" id="vehicle-type-filter12" name="VehicleType" value="Station Wagon">
+						<label for="vehicle-type-filter12">Station Wagon</label>
+					</div>
+					<div class="apply-filters-button">
+						<button class="apply-filters" type="submit">Apply filters</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	@if (Model.Any())
+	{
+		<div class="vehicles-list">
+			@{
+				foreach (var vehicle in Model)
+				{
+					<div class="vehicle">
+						<div class="vehicle-img">
+							<img src="@vehicle.ImageUrl" />
+						</div>
+						<div class="test">
+							<div class="vehicle-info">
+								<p class="vehicle-name">@vehicle.Make</p>
+								<p class="seats-count">@vehicle.SeatsCount seats</p>
+								<p class="transmission-type">@vehicle.TransmissionType</p>
+								<p class="mileage">Mileage: @vehicle.Mileage</p>
+							</div>
+							<div class="car-rental-info">
+
+								<a asp-controller="Vehicle" asp-action="Delete"
+								   asp-route-branchId="@ViewData["BranchId"]">Delete</a>
+							</div>
+						</div>
+
+					</div>
+				}
+			}
+		</div>
+	}
+</div>

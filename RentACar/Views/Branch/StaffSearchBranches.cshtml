@@ -1,0 +1,30 @@
+﻿@model RentACar.Web.ViewModels.StaffSearchViewModel
+@{
+    ViewData["Title"] = $"Branches in {Model.City}";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+<div class="branches-index-wrapper">
+    @foreach (var branch in Model.FilteredBranches)
+    {
+        <form asp-action="Vehicles" asp-controller="Vehicle" method="get" class="col-md-3 mb-4 ms-auto me-auto">
+            <input type="hidden" name="BranchId" value="@branch.Id.ToString()" />
+            <div class="card h-100 bg-bluegradient" style="width: 100%;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@branch.Name</h5>
+                    <p class="card-text">Address: @branch.Address</p>
+                    <p class="card-text">Vehicles: @branch.VehiclesCount</p>
+                    <input type="hidden" name="branchId" value="@branch.Id" />
+                    <div class="d-flex justify-content-between mt-auto">
+                        <button type="submit" class="btn btn-info w-100">Visit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+</div>

@@ -262,5 +262,21 @@ namespace RentACar.Services.Data
 
 			return allBranches;
 		}
+
+		public async Task<IEnumerable<StaffSearchBranchViewModel>> StaffSearchBranchesAsync(StaffSearchViewModel model)
+		{
+			var branchesForThisCity = await branchRepository.GetAllAttached()
+				.Where(b => b.City == model.City)
+				.Select(b => new StaffSearchBranchViewModel()
+				{
+					Name = b.Name,
+					Id = b.Id,
+					Address = b.Address,
+					VehiclesCount = b.Vehicles.Count
+				})
+				.ToListAsync();
+
+			return branchesForThisCity;
+		}
 	}
 }

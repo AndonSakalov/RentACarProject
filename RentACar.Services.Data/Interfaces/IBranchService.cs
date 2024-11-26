@@ -12,5 +12,7 @@ namespace RentACar.Services.Data.Interfaces
 		Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesForCurrentBranchAsync(string id, string pickupDate, string returnDate, string vehicleTypeName);
 
 		Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesFilteredAsync(VehicleFilterViewModel model);
+
+		Task<IEnumerable<StaffSearchBranchViewModel>> StaffSearchBranchesAsync(StaffSearchViewModel model);
 	}
 }
