@@ -8,6 +8,9 @@ namespace RentACar.Web.ViewModels
 		public Guid BranchId { get; set; }
 
 		[Required]
+		public Guid VehicleId { get; set; }
+
+		[Required]
 		public string Make { get; set; } = null!;
 
 		[Required]

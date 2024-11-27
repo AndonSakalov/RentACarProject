@@ -247,3 +247,44 @@ div.home-h1{
 #add-vehicle{
     color:chartreuse;
 }
+
+div.edit-car {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+    margin-right: 2em;
+    justify-content: space-between;
+}
+
+div.edit-car a{
+    border:solid;
+    border-color:black;
+    margin-bottom:2.5em;
+    border-radius:0.5em;
+    text-decoration:none;
+    color:white;
+    background-color:darkred;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    margin-top:0.5em;
+}
+
+div.edit-car a:hover{
+    border:solid;
+    border-color:black;
+    margin-bottom:2.5em;
+    border-radius:0.5em;
+    text-decoration:none;
+    color:white;
+    background-color:red;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    margin-top:0.5em;
+}
+div.vehicle-edit-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5em;
+    background-color: white;
+    align-items: baseline;
+}
