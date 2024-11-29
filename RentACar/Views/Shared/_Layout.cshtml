@@ -43,12 +43,6 @@
 						@if (User.IsInRole("Staff") || User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
-								<a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="StaffSearch">Edit Vehicles</a>
-							</li>
-						}
-						@if (User.IsInRole("Staff") || User.IsInRole("Admin"))
-						{
-							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="StaffSearch">Branch Actions</a>
 							</li>
 						}

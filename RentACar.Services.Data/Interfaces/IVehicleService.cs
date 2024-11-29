@@ -8,10 +8,13 @@ namespace RentACar.Services.Data.Interfaces
 		Task<IEnumerable<EditVehicleListViewModel>> GetAllVehiclesAsync(string id);
 		Task<IEnumerable<EditVehicleListViewModel>> FilterVehiclesAsync(string branchId, string vehicleType);
 		Task<bool> DeleteVehicleAsync(EditVehicleListViewModel model);
-
 		Task<(EditVehicleListViewModel? model, bool isFound)> GetVehicleToDeleteByIdAsync(string id);
 		Task<(EditVehicleViewModel? model, bool isFound)> GetVehicleToEditByIdAsync(string id);
-
 		Task<bool> EditAndSaveChangesAsync(EditVehicleViewModel model);
+		Task<IEnumerable<ServiceVehicleViewModel>> GetVehiclesDueForServiceAsync(string branchId);
+
+		Task<(bool isSuccessful, ServiceVehicleViewModel model)> ServiceVehicleAsync(string branchId, string vehicleId);
+
+
 	}
 }

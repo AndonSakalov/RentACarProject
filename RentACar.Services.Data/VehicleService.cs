@@ -267,5 +267,73 @@ namespace RentACar.Services.Data
 
 			return (model, true);
 		}
+
+		public async Task<IEnumerable<ServiceVehicleViewModel>> GetVehiclesDueForServiceAsync(string branchId)
+		{
+			Guid validGuid = Guid.NewGuid();
+
+			bool isGuidValid = IsGuidValid(branchId, ref validGuid);
+			if (!isGuidValid)
+			{
+				return null;
+			}
+
+			//TODO:Cover the case where the guid is valid but no branch with that guid(the user changed the guid in the url)
+
+			var vehiclesToService = await vehicleRepository.GetAllAttached()
+				.Where(v => v.IsDeleted == false && v.ServicedAt + 10000 <= v.Mileage && v.BranchId == validGuid)
+				.Include(v => v.Make)
+				.Select(v => new ServiceVehicleViewModel()
+				{
+					VehicleId = v.Id,
+					Make = v.Make.Name,
+					Model = v.Model,
+					ServicedAt = v.ServicedAt,
+					Mileage = v.Mileage,
+					ImageUrl = v.ImageUrl!
+				})
+				.ToListAsync();
+
+			return vehiclesToService;
+		}
+
+		public async Task<(bool isSuccessful, ServiceVehicleViewModel model)> ServiceVehicleAsync(string branchId, string vehicleId)
+		{
+			//TODO:Cover the case where the guid is valid but no branch with that guid(the user changed the guid in the url)
+			Guid validBranchId = Guid.NewGuid();
+			Guid validVehicleId = Guid.NewGuid();
+
+			bool areGuidsValid = IsGuidValid(branchId, ref validBranchId);
+			areGuidsValid = IsGuidValid(vehicleId, ref validVehicleId);
+			if (!areGuidsValid)
+			{
+				return (false, null);
+			}
+
+			Vehicle? vehicleToService = await vehicleRepository.GetAllAttached()
+				.Where(v => v.IsDeleted == false && v.BranchId == validBranchId && v.Id == validVehicleId)
+				.Include(v => v.Make)
+				.FirstOrDefaultAsync();
+			if (vehicleToService == null)
+			{
+				return (false, null);
+			}
+
+			var model = new ServiceVehicleViewModel()
+			{
+				VehicleId = vehicleToService.Id,
+				Make = vehicleToService.Make.Name,
+				Model = vehicleToService.Model,
+				Mileage = vehicleToService.Mileage,
+				ServicedAt = vehicleToService.ServicedAt,
+				ImageUrl = vehicleToService.ImageUrl!
+			};
+
+			vehicleToService.ServicedAt = vehicleToService.Mileage;
+
+			await vehicleRepository.UpdateAsync(vehicleToService);
+
+			return (true, model);
+		}
 	}
 }
