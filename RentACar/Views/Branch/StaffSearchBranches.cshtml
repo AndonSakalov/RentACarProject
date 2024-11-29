@@ -12,8 +12,10 @@
 <div class="branches-index-wrapper">
     @foreach (var branch in Model.FilteredBranches)
     {
-        <form asp-action="Vehicles" asp-controller="Vehicle" method="get" class="col-md-3 mb-4 ms-auto me-auto">
+        @* <form asp-action="Vehicles" asp-controller="Vehicle" method="get" class="col-md-3 mb-4 ms-auto me-auto"> *@
+        <form asp-action="BranchActions" asp-controller="Branch" method="get" class="col-md-3 mb-4 ms-auto me-auto">
             <input type="hidden" name="BranchId" value="@branch.Id.ToString()" />
+            <input type="hidden" name="City" value="@ViewData["City"]" />
             <div class="card h-100 bg-bluegradient" style="width: 100%;">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@branch.Name</h5>
