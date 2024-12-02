@@ -4,6 +4,6 @@
 	{
 		bool IsGuidValid(string? id, ref Guid parsedGuid);
 
-		decimal CalculateRentalPrice(DateTime pickupDate, DateTime returnDate, decimal pricePerDay);
+		(decimal price, int rentalLength) CalculateRentalPrice(DateTime pickupDate, DateTime returnDate, decimal pricePerDay);
 	}
 }

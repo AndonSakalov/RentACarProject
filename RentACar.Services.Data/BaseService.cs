@@ -4,13 +4,6 @@ namespace RentACar.Services.Data
 {
 	public class BaseService : IBaseService
 	{
-		public decimal CalculateRentalPrice(DateTime pickupDate, DateTime returnDate, decimal pricePerDay)
-		{
-			int rentalLength = returnDate.Day - pickupDate.Day + 1;
-
-			return pricePerDay * rentalLength;
-		}
-
 		public bool IsGuidValid(string? id, ref Guid parsedGuid)
 		{
 			if (String.IsNullOrWhiteSpace(id))
@@ -25,6 +18,15 @@ namespace RentACar.Services.Data
 			}
 
 			return true;
+		}
+
+		public (decimal price, int rentalLength) CalculateRentalPrice(DateTime pickupDate, DateTime returnDate, decimal pricePerDay)
+		{
+			int rentalLength = (returnDate.Date - pickupDate.Date).Days + 1;
+
+			decimal price = pricePerDay * rentalLength;
+
+			return (price, rentalLength);
 		}
 	}
 }

@@ -18,67 +18,67 @@
 
 <div class="vehicle-list-wrapper">
 	<div class="filters">
-			<div class="filters-header">
-				<h2>Filter</h2>
-				<a asp-controller="Branch" asp-action="Vehicles"
-				   asp-route-id="@ViewData["BranchId"]"
-				   asp-route-pickupDate="@ViewData["PickUpDate"]"
-				   asp-route-returnDate="@ViewData["ReturnDate"]"
-				   asp-route-vehicleTypeName="@ViewData["VehicleTypeName"]">Clear all filters</a>
-			</div>
-		
-			<div class="filters-body">
-				<form method="get" asp-controller="Branch" asp-action="FilteredVehicles">
-					<input type="hidden" name="BranchId" value="@ViewData["BranchId"]" />
-					<input type="hidden" name="PickupDate" value="@ViewData["PickUpDate"]" />
-					<input type="hidden" name="ReturnDate" value="@ViewData["ReturnDate"]" />
-					<input type="hidden" name="VehicleTypeName" value="@ViewData["VehicleTypeName"]" />
-					<div class="price-filters">
-						<h4>Price per day</h4>
-						<div>
-							<input type="checkbox" id="price-filter1" name="PriceRanges" value="0-50">
-							<label for="price-filter1">BGN 0 - BGN 50</label>
-						</div>
-						<div>
-							<input type="checkbox" id="price-filter2" name="PriceRanges" value="50-100">
-							<label for="price-filter2">BGN 50 - BGN 100</label>
-						</div>
-						<div>
-							<input type="checkbox" id="price-filter3" name="PriceRanges" value="100-150">
-							<label for="price-filter3">BGN 100 - BGN 150</label>
-						</div>
-						<div>
-							<input type="checkbox" id="price-filter4" name="PriceRanges" value="150+">
-							<label for="price-filter4">BGN 150+</label>
-						</div>
+		<div class="filters-header">
+			<h2>Filter</h2>
+			<a asp-controller="Branch" asp-action="Vehicles"
+			   asp-route-id="@ViewData["BranchId"]"
+			   asp-route-pickupDate="@ViewData["PickUpDate"]"
+			   asp-route-returnDate="@ViewData["ReturnDate"]"
+			   asp-route-vehicleTypeName="@ViewData["VehicleTypeName"]">Clear all filters</a>
+		</div>
+
+		<div class="filters-body">
+			<form method="get" asp-controller="Branch" asp-action="FilteredVehicles">
+				<input type="hidden" name="BranchId" value="@ViewData["BranchId"]" />
+				<input type="hidden" name="PickupDate" value="@ViewData["PickUpDate"]" />
+				<input type="hidden" name="ReturnDate" value="@ViewData["ReturnDate"]" />
+				<input type="hidden" name="VehicleTypeName" value="@ViewData["VehicleTypeName"]" />
+				<div class="price-filters">
+					<h4>Price per day</h4>
+					<div>
+						<input type="checkbox" id="price-filter1" name="PriceRanges" value="0-50">
+						<label for="price-filter1">BGN 0 - BGN 50</label>
 					</div>
-					<div class="doors-count-filters">
-						<h4>Doors count</h4>
-						<div>
-							<input type="checkbox" id="doors-count-filter1" name="DoorsCount" value="2">
-							<label for="doors-count-filter1">2 doors</label>
-						</div>
-						<div>
-							<input type="checkbox" id="doors-count-filter2" name="DoorsCount" value="4">
-							<label for="doors-count-filter2">4 doors</label>
-						</div>
+					<div>
+						<input type="checkbox" id="price-filter2" name="PriceRanges" value="50-100">
+						<label for="price-filter2">BGN 50 - BGN 100</label>
 					</div>
-					<div class="transmission-type-filters">
-						<h4>Transmission type</h4>
-						<div>
-							<input type="checkbox" id="transmission-type-filter1" name="TransmissionType" value="Manual">
-							<label for="transmission-type-filter1">Manual</label>
-						</div>
-						<div>
-							<input type="checkbox" id="transmission-type-filter2" name="TransmissionType" value="Automatic">
-							<label for="transmission-type-filter2">Automatic</label>
-						</div>
+					<div>
+						<input type="checkbox" id="price-filter3" name="PriceRanges" value="100-150">
+						<label for="price-filter3">BGN 100 - BGN 150</label>
 					</div>
-					<div class="apply-filters-button">
-						<button class="apply-filters" type="submit">Apply filters</button>
+					<div>
+						<input type="checkbox" id="price-filter4" name="PriceRanges" value="150+">
+						<label for="price-filter4">BGN 150+</label>
 					</div>
-				</form>
-			</div>
+				</div>
+				<div class="doors-count-filters">
+					<h4>Doors count</h4>
+					<div>
+						<input type="checkbox" id="doors-count-filter1" name="DoorsCount" value="2">
+						<label for="doors-count-filter1">2 doors</label>
+					</div>
+					<div>
+						<input type="checkbox" id="doors-count-filter2" name="DoorsCount" value="4">
+						<label for="doors-count-filter2">4 doors</label>
+					</div>
+				</div>
+				<div class="transmission-type-filters">
+					<h4>Transmission type</h4>
+					<div>
+						<input type="checkbox" id="transmission-type-filter1" name="TransmissionType" value="Manual">
+						<label for="transmission-type-filter1">Manual</label>
+					</div>
+					<div>
+						<input type="checkbox" id="transmission-type-filter2" name="TransmissionType" value="Automatic">
+						<label for="transmission-type-filter2">Automatic</label>
+					</div>
+				</div>
+				<div class="apply-filters-button">
+					<button class="apply-filters" type="submit">Apply filters</button>
+				</div>
+			</form>
+		</div>
 	</div>
 	@if (Model.Any())
 	{
@@ -100,17 +100,19 @@
 							<div class="car-rental-info">
 								<p>Price for @vehicle.RentalLengthInDays days:</p>
 								<p>@vehicle.PriceForSelectedDays</p>
-								<a asp-controller="Branch" asp-action="Vehicles"
-								   asp-route-id="@ViewData["BranchId"]"
+								<a asp-controller="Rental" asp-action="Index"
+								   asp-route-branchId="@ViewData["BranchId"]"
 								   asp-route-pickupDate="@ViewData["PickUpDate"]"
 								   asp-route-returnDate="@ViewData["ReturnDate"]"
-								   asp-route-vehicleTypeName="@ViewData["VehicleTypeName"]">View deal</a>
+								   asp-route-vehicleTypeName="@ViewData["VehicleTypeName"]"
+								   asp-route-vehicleId=@vehicle.Id
+								   asp-route-price=@vehicle.PriceForSelectedDays>View deal</a>
 							</div>
 						</div>
 
 					</div>
+					}
+					}
+				</div>
 				}
-			}
-		</div>
-	}
-</div>
+			</div>

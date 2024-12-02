@@ -125,17 +125,19 @@ namespace RentACar.Services.Data
 
 			foreach (var v in vehicles)
 			{
+				(decimal price, int rentalLength) = CalculateRentalPrice(validPickupDate, validReturnDate, v.PricePerDay);
 				VehicleListViewModel model = new VehicleListViewModel()
 				{
+					Id = v.Id,
 					Name = $"{v.Make.Name} {v.Model}",
 					SeatsCount = v.SeatsCount,
 					TransmissionType = v.Transmission.Type.ToString(),
 					Mileage = v.Mileage,
-					PriceForSelectedDays = CalculateRentalPrice(validPickupDate, validReturnDate, v.PricePerDay),
+					PriceForSelectedDays = price,
 					ImageUrl = v.ImageUrl!,
 					VehicleType = v.VehicleType.Name,
 					BranchName = v.Branch.Name,
-					RentalLengthInDays = Math.Abs(validReturnDate.Day - validPickupDate.Day) + 1
+					RentalLengthInDays = rentalLength
 				};
 
 				outputModel.Add(model);
@@ -226,17 +228,18 @@ namespace RentACar.Services.Data
 
 			foreach (var v in availableVehicles)
 			{
+				(decimal price, int rentalLength) = CalculateRentalPrice(validPickupDate, validReturnDate, v.PricePerDay);
 				VehicleListViewModel currentModel = new VehicleListViewModel()
 				{
 					Name = $"{v.Make.Name} {v.Model}",
 					SeatsCount = v.SeatsCount,
 					TransmissionType = v.Transmission.Type.ToString(),
 					Mileage = v.Mileage,
-					PriceForSelectedDays = CalculateRentalPrice(validPickupDate, validReturnDate, v.PricePerDay),
+					PriceForSelectedDays = price,
 					ImageUrl = v.ImageUrl!,
 					VehicleType = v.VehicleType.Name,
 					BranchName = v.Branch.Name,
-					RentalLengthInDays = Math.Abs(validReturnDate.Day - validPickupDate.Day) + 1
+					RentalLengthInDays = rentalLength
 				};
 
 				outputModel.Add(currentModel);
