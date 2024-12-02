@@ -13,17 +13,43 @@ namespace RentACar.Services.Data
 		private readonly IRepository<Rental, Guid> rentalRepository;
 		private readonly IRepository<Vehicle, Guid> vehicleRepository;
 		private readonly IRepository<Branch, Guid> branchRepository;
-
+		private readonly IRepository<Reservation, Guid> reservationRepository;
 		public RentalService(
 			IRepository<Rental, Guid> rentalRepository,
 			IRepository<Vehicle, Guid> vehicleRepository,
-			IRepository<Branch, Guid> branchRepository)
+			IRepository<Branch, Guid> branchRepository,
+			IRepository<Reservation, Guid> reservationRepository)
 		{
 			this.rentalRepository = rentalRepository;
 			this.vehicleRepository = vehicleRepository;
 			this.branchRepository = branchRepository;
+			this.reservationRepository = reservationRepository;
 		}
-		public async Task<(bool isValid, RentalViewModel? model)> ValidateInput(string branchId, string vehicleId, string pickupDate, string returnDate, string vehicleType, decimal price)
+
+		public async Task<bool> ReserveVehicle(DealViewModel model, string userId)
+		{
+			Guid validUserId = Guid.Empty;
+			bool isGuidValid = IsGuidValid(userId, ref validUserId);
+			if (!isGuidValid)
+			{
+				return false;
+			}
+
+			Reservation reservation = new Reservation()
+			{
+				UserId = validUserId,
+				VehicleId = model.Vehicle.Id,
+				PickUpDate = model.PickupDate,
+				ReturnDate = model.ReturnDate,
+				Price = model.Price
+			};
+
+			await reservationRepository.AddAsync(reservation);
+
+			return await reservationRepository.UpdateAsync(reservation);
+		}
+
+		public async Task<(bool isValid, DealViewModel? model)> ValidateInput(string branchId, string vehicleId, string pickupDate, string returnDate, string vehicleType, decimal price)
 		{
 			Guid validBranchId = Guid.Empty;
 			Guid validVehicleId = Guid.Empty;
@@ -54,7 +80,7 @@ namespace RentACar.Services.Data
 				return (false, null);
 			}
 
-			RentalViewModel model = new RentalViewModel()
+			DealViewModel model = new DealViewModel()
 			{
 				Branch =
 				{
@@ -80,5 +106,7 @@ namespace RentACar.Services.Data
 
 			return (true, model);
 		}
+
+
 	}
 }

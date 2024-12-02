@@ -1,8 +1,10 @@
-﻿@model RentACar.Web.ViewModels.Rental.RentalViewModel
-	
+﻿@using static RentACar.Common.EntityValidationConstants.Branch;
+@model RentACar.Web.ViewModels.Rental.DealViewModel
+
+
 <div class="rental-wrapper">
 	<div class="header">
-		<h2 class="found-branches-title">Reserve @Model.Vehicle.Name from @Model.Branch.DisplayName</h2>
+		<h2 class="found-branches-title">Reserve @Model.Vehicle.Name</h2>
 	</div>
 	<div class="reservation">
 		<div class="vehicle-img">
@@ -16,10 +18,15 @@
 			<p>Return date: @Model.ReturnDate</p>
 			<p class="rental-price">Price for the rental: <span>@Model.Price BGN</span></p>
 		</div>
-		<div class="mb-2">
-			<a asp-controller="Vehicle" asp-action="Delete"
+		<div class="reserve">
+			<a asp-controller="Rental" asp-action="Reserve"
+			   class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded"
 			   asp-route-branchId="@Model.Branch.Id"
-			   asp-route-vehicleId="@Model.Vehicle.Id">Delete</a>
+			   asp-route-vehicleId="@Model.Vehicle.Id"
+			   asp-route-pickupDate="@Model.PickupDate.ToString(RentalDateFormat)"
+			   asp-route-returnDate="@Model.ReturnDate.ToString(RentalDateFormat)"
+			   asp-route-price="@Model.Price"
+			   asp-route-vehicleTypeName="@Model.VehicleType">Reserve</a>
 		</div>
 	</div>
 </div>

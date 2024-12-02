@@ -327,3 +327,7 @@ p.rental-price span {
     color:red;
 }
 
+div.reserve a{
+    align-self:center;
+}
+

@@ -2,7 +2,7 @@
 
 namespace RentACar.Web.ViewModels.Rental
 {
-	public class RentalViewModel
+	public class DealViewModel
 	{
 		[Required]
 		public RentalBranchViewModel Branch { get; set; } = new RentalBranchViewModel();

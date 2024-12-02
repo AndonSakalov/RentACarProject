@@ -1,0 +1,43 @@
+﻿@using static RentACar.Common.EntityValidationConstants.Branch;
+@model RentACar.Web.ViewModels.Rental.DealViewModel;
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+	<h2>Reserve </h2>
+</div>
+<hr />
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card">
+			<div class="card-body">
+				<h3 class="card-title text-center">Reservation</h3>
+				<p class="text-danger mt-3">Do you confirm reservation of @Model.Vehicle.Name from @Model.Branch.DisplayName?</p>
+			</div>
+			<div class="card-footer">
+				<form asp-action="Reserve" asp-controller="Rental" method="post">
+					<input type="hidden" name="Branch.Id" value="@Model.Branch.Id" />
+					<input type="hidden" name="Vehicle.Id" value="@Model.Vehicle.Id" />
+					<input type="hidden" name="PickupDate" value="@Model.PickupDate.ToString(RentalDateFormat)" />
+					<input type="hidden" name="ReturnDate" value="@Model.ReturnDate.ToString(RentalDateFormat)" />
+					<input type="hidden" name="Price" value="@Model.Price" />
+					<input type="hidden" name="VehicleType" value="@Model.VehicleType" />
+					<input type="hidden" name="Vehicle.Name" value="@Model.Vehicle.Name" />
+					<input type="hidden" name="Branch.City" value="@Model.Branch.City" />
+					<input type="hidden" name="Branch.Country" value="@Model.Branch.Country" />
+					<input type="hidden" name="Branch.Address" value="@Model.Branch.Address" />
+					<input type="hidden" name="Branch.Name" value="@Model.Branch.Name" />
+					<input type="hidden" name="Branch.DisplayName" value="@Model.Branch.DisplayName" />
+					<button type="submit" class="btn btn-danger">Confirm Reservation</button>
+					<a asp-controller="Rental" asp-action="Index"
+					   class="btn btn-warning"
+					   asp-route-branchId="@Model.Branch.Id"
+					   asp-route-vehicleId="@Model.Vehicle.Id"
+					   asp-route-pickupDate="@Model.PickupDate.ToString(RentalDateFormat)"
+					   asp-route-returnDate="@Model.ReturnDate.ToString(RentalDateFormat)"
+					   asp-route-vehicleTypeName="@Model.VehicleType"
+					   asp-route-price="@Model.Price">Cancel</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
