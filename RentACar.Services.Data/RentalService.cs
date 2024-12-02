@@ -46,6 +46,7 @@ namespace RentACar.Services.Data
 			Vehicle? vehicle = vehicleRepository.GetAllAttached()
 				.Where(v => v.Id == validVehicleId)
 				.Include(v => v.Transmission)
+				.Include(v => v.Make)
 				.SingleOrDefault();
 
 			if (branch == null || vehicle == null)
@@ -67,7 +68,7 @@ namespace RentACar.Services.Data
 				{
 					Id =vehicle.Id,
 					ImageUrl = vehicle.ImageUrl!,
-					Name = $"{vehicle.Make} {vehicle.Model}",
+					Name = $"{vehicle.Make.Name} {vehicle.Model}",
 					SeatsCount = vehicle.SeatsCount,
 					TransmissionType = vehicle.Transmission.Type.ToString()
 				},

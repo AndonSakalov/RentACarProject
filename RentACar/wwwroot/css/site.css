@@ -107,7 +107,7 @@ div.pickup-date{
     flex-direction:column;
 }
 
-h1.found-branches-title {
+h1.found-branches-title, h2.found-branches-title {
     color: navajowhite;
     background: rgb(64,218,254);
     background: radial-gradient(circle, rgba(64,218,254,1) 12%, rgba(16,0,246,1) 100%);
@@ -288,3 +288,42 @@ div.vehicle-edit-info {
     background-color: white;
     align-items: baseline;
 }
+
+div.rental-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+div.reservation {
+    display: flex;
+    border: solid;
+    background-color: cornflowerblue;
+    flex-direction:column;
+    align-self:center;
+    width:50vw
+}
+
+div.vehicle-img img {
+    height: 12.6em;
+    width: 20em;
+    margin: 0em;
+}
+div.vehicle-img {
+    margin:0.5em;
+    align-self:center;
+}
+
+div.reservation-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+p.rental-price{
+    font-size:2em;
+}
+p.rental-price span {
+    font-size: 1em;
+    color:red;
+}
+

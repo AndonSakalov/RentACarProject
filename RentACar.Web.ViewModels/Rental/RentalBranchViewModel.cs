@@ -18,5 +18,7 @@ namespace RentACar.Web.ViewModels.Rental
 
 		[Required]
 		public string Address { get; set; } = null!;
+
+		public string DisplayName => $"{Name} ({Address} - {City}, {Country})";
 	}
 }

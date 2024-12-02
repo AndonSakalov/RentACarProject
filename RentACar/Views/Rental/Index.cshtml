@@ -1,1 +1,25 @@
 ﻿@model RentACar.Web.ViewModels.Rental.RentalViewModel
+	
+<div class="rental-wrapper">
+	<div class="header">
+		<h2 class="found-branches-title">Reserve @Model.Vehicle.Name from @Model.Branch.DisplayName</h2>
+	</div>
+	<div class="reservation">
+		<div class="vehicle-img">
+			<img src="@Model.Vehicle.ImageUrl" />
+		</div>
+		<div class="reservation-info">
+			<h3>@Model.Vehicle.Name</h3>
+			<p>Transmission type: @Model.Vehicle.TransmissionType</p>
+			<p>Seats count: @Model.Vehicle.SeatsCount</p>
+			<p>Pick up date: @Model.PickupDate</p>
+			<p>Return date: @Model.ReturnDate</p>
+			<p class="rental-price">Price for the rental: <span>@Model.Price BGN</span></p>
+		</div>
+		<div class="mb-2">
+			<a asp-controller="Vehicle" asp-action="Delete"
+			   asp-route-branchId="@Model.Branch.Id"
+			   asp-route-vehicleId="@Model.Vehicle.Id">Delete</a>
+		</div>
+	</div>
+</div>
