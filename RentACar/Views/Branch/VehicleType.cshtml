@@ -1,6 +1,13 @@
 ﻿@model IEnumerable<RentACar.Web.ViewModels.VehicleTypeViewModel>;
 @{
-    ViewData["Title"] = $"Available vehicle types for this branch";
+    if (!Model.Any())
+    {
+        ViewData["Title"] = "No available vehicles at this moment.";
+    }
+    else
+    {
+        ViewData["Title"] = $"Available vehicle types for this branch";
+    }
 }
 <head>
     <link rel="stylesheet" href="~/css/site.css">

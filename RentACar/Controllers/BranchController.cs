@@ -7,115 +7,115 @@ using RentACar.Web.ViewModels;
 namespace RentACar.Controllers
 {
 
-	public class BranchController : Controller
-	{
-		private readonly IBranchService service;
-		public BranchController(IBranchService service)
-		{
-			this.service = service;
-		}
-		public async Task<IActionResult> Index(SearchBranchViewModel model)
-		{
-			var outputModel = await service.GetAllOrderedByLocationAsync(model);
+    public class BranchController : Controller
+    {
+        private readonly IBranchService service;
+        public BranchController(IBranchService service)
+        {
+            this.service = service;
+        }
+        public async Task<IActionResult> Index(SearchBranchViewModel model)
+        {
+            var outputModel = await service.GetAllOrderedByLocationAsync(model);
 
-			if (outputModel.IsNullOrEmpty())
-			{
-				ViewBag.Message = $"No branches found!";
-			}
-			else
-			{
-				ViewBag.Message = $"Branches in {model.City.ToString()}"; ;
-			}
+            if (outputModel.IsNullOrEmpty())
+            {
+                ViewBag.Message = $"No branches found!";
+            }
+            else
+            {
+                ViewBag.Message = $"Branches in {model.City.ToString()}"; ;
+            }
 
-			return View(outputModel);
-		}
+            return View(outputModel);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> VehicleType(string id, string pickupDate, string returnDate)
-		{
-			var vehicleTypes = await service.GetAllVehicleTypesAsync(id, pickupDate, returnDate);
-			if (vehicleTypes == null)
-			{
-				RedirectToAction(nameof(Index));
-			}
+        [HttpGet]
+        public async Task<IActionResult> VehicleType(string id, string pickupDate, string returnDate)
+        {
+            var vehicleTypes = await service.GetAllVehicleTypesAsync(id, pickupDate, returnDate);
+            if (vehicleTypes == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-			return View(vehicleTypes);
-		}
+            return View(vehicleTypes);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> Vehicles(string id, string pickupDate, string returnDate, string vehicleTypeName)
-		{
+        [HttpGet]
+        public async Task<IActionResult> Vehicles(string id, string pickupDate, string returnDate, string vehicleTypeName)
+        {
 
-			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesForCurrentBranchAsync(id, pickupDate, returnDate, vehicleTypeName);
+            IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesForCurrentBranchAsync(id, pickupDate, returnDate, vehicleTypeName);
 
-			if (outputModel == null)
-			{
-				return RedirectToAction(nameof(Index));//wrong data
-			}
-			if (outputModel!.Count() == 0)
-			{
-				ViewData["Title"] = $"No vehicles matching your criteria.";
-			}
-			else
-			{
-				ViewData["Title"] = $"{outputModel!.First().VehicleType} vehicles in {outputModel!.First().BranchName}";
+            if (outputModel == null)
+            {
+                return RedirectToAction(nameof(Index));//wrong data
+            }
+            if (outputModel!.Count() == 0)
+            {
+                ViewData["Title"] = $"No vehicles matching your criteria.";
+            }
+            else
+            {
+                ViewData["Title"] = $"{outputModel!.First().VehicleType} vehicles in {outputModel!.First().BranchName}";
 
-			}
+            }
 
-			ViewData["BranchId"] = id;
-			ViewData["PickUpDate"] = pickupDate;
-			ViewData["ReturnDate"] = returnDate;
-			ViewData["VehicleTypeName"] = vehicleTypeName;
+            ViewData["BranchId"] = id;
+            ViewData["PickUpDate"] = pickupDate;
+            ViewData["ReturnDate"] = returnDate;
+            ViewData["VehicleTypeName"] = vehicleTypeName;
 
-			return this.View(outputModel);
-		}
+            return this.View(outputModel);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> FilteredVehicles(VehicleFilterViewModel filters)
-		{
+        [HttpGet]
+        public async Task<IActionResult> FilteredVehicles(VehicleFilterViewModel filters)
+        {
 
-			IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesFilteredAsync(filters);
+            IEnumerable<VehicleListViewModel> outputModel = await service.GetAllVehiclesFilteredAsync(filters);
 
-			if (outputModel == null)
-			{
-				return RedirectToAction(nameof(Index)); //wrong data
-			}
+            if (outputModel == null)
+            {
+                return RedirectToAction(nameof(Index)); //wrong data
+            }
 
-			if (outputModel!.Count() == 0)
-			{
-				ViewData["Title"] = $"No vehicles matching your criteria.";
-			}
-			else
-			{
-				ViewData["Title"] = $"{outputModel!.First().VehicleType} vehicles in {outputModel!.First().BranchName}";
-			}
+            if (outputModel!.Count() == 0)
+            {
+                ViewData["Title"] = $"No vehicles matching your criteria.";
+            }
+            else
+            {
+                ViewData["Title"] = $"{outputModel!.First().VehicleType} vehicles in {outputModel!.First().BranchName}";
+            }
 
-			ViewData["BranchId"] = filters.BranchId;
-			ViewData["PickUpDate"] = filters.PickupDate;
-			ViewData["ReturnDate"] = filters.ReturnDate;
-			ViewData["VehicleTypeName"] = filters.VehicleTypeName;
+            ViewData["BranchId"] = filters.BranchId;
+            ViewData["PickUpDate"] = filters.PickupDate;
+            ViewData["ReturnDate"] = filters.ReturnDate;
+            ViewData["VehicleTypeName"] = filters.VehicleTypeName;
 
 
-			return View("Vehicles", outputModel);
-		}
+            return View("Vehicles", outputModel);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> StaffSearchBranches(StaffSearchViewModel model)
-		{
-			model.FilteredBranches = (await service.StaffSearchBranchesAsync(model)).ToList();
-			ViewData["City"] = model.City;
+        [HttpGet]
+        public async Task<IActionResult> StaffSearchBranches(StaffSearchViewModel model)
+        {
+            model.FilteredBranches = (await service.StaffSearchBranchesAsync(model)).ToList();
+            ViewData["City"] = model.City;
 
-			return this.View(model);
-		}
+            return this.View(model);
+        }
 
-		[HttpGet]
-		[Authorize(Roles = "Staff, Admin")]
-		public IActionResult BranchActions(string branchId, string city)
-		{
-			ViewData["City"] = city;
-			ViewData["BranchId"] = branchId;
-			return this.View();
-		}
+        [HttpGet]
+        [Authorize(Roles = "Staff, Admin")]
+        public IActionResult BranchActions(string branchId, string city)
+        {
+            ViewData["City"] = city;
+            ViewData["BranchId"] = branchId;
+            return this.View();
+        }
 
-	}
+    }
 }
