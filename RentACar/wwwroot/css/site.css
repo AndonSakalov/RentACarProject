@@ -330,4 +330,7 @@ p.rental-price span {
 div.reserve a{
     align-self:center;
 }
+div.reservation-box{
+    background-color:white;
+}
 

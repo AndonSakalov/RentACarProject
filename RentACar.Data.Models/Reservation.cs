@@ -35,5 +35,8 @@ namespace RentACar.Data.Models
 		[Precision(18, 2)]
 		[Comment("The price for the reserved rental.")]
 		public decimal Price { get; set; }
+
+		[Required]
+		public bool isActive { get; set; }
 	}
 }

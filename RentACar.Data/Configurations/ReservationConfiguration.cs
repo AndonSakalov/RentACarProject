@@ -15,6 +15,9 @@ namespace RentACar.Data.Configurations
 			builder.HasOne(r => r.Vehicle)
 				.WithMany(v => v.Reservations)
 				.HasForeignKey(r => r.VehicleId);
+
+			builder.Property(r => r.isActive)
+				.HasDefaultValue(true);
 		}
 	}
 }

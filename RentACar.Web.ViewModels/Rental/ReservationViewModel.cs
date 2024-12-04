@@ -2,7 +2,7 @@
 
 namespace RentACar.Web.ViewModels.Rental
 {
-    public class ReservationViewModel /*string branchId, string vehicleId, string pickupDate, string returnDate, decimal price*/
+    public class ReservationViewModel
     {
         [Required]
         public Guid BranchId { get; set; }

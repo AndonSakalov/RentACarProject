@@ -1,0 +1,74 @@
+﻿@using RentACar.Web.ViewModels.Rental;
+@using static RentACar.Common.EntityValidationConstants.Branch;
+@model ReservationCompositeViewModel
+
+@if (Model.Reservations.Count() == 0)
+{
+	ViewData["Title"] = "No reservations found!";
+}
+else
+{
+	ViewData["Title"] = $"Reservations for {Model.Reservations.Values.First().BranchName}";
+}
+
+<h2 class="found-branches-title">@ViewData["Title"]</h2>
+@if (TempData["Message"] != null)
+{
+	string messageType = TempData["MessageType"]?.ToString();
+	string alertClass = messageType == "Success" ? "alert-success" : "alert-danger"; // Bootstrap classes
+	<div id="messageBox" class="alert @alertClass" role="alert">
+		@TempData["Message"]
+	</div>
+}
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const messageBox = document.getElementById("messageBox");
+		if (messageBox) {
+			setTimeout(() => {
+				messageBox.style.transition = "opacity 1s ease-out";
+				messageBox.style.opacity = "0";
+				setTimeout(() => messageBox.remove(), 1000);
+			}, 3000);
+		}
+	});
+</script>
+
+@foreach (var date in Model.UniqueDates)
+{
+	if (date.Date == DateTime.Now.Date)
+	{
+		<h3>Reservations for today:</h3>
+	}
+	else
+	{
+		<h3>Reservations for @date.ToString("dd/MM/yyyy"):</h3>
+	}
+	foreach (var r in Model.Reservations)
+	{
+		if (r.Key.Date == date)
+		{
+			<form asp-action="Rent" asp-controller="Rental" method="post">
+				<div class="reservation-box">
+					<div class="reservation-box-info">
+						<p>Customer email: @r.Value.CustomerEmail</p>
+						<p>Customer Username: @r.Value.CustomerName</p>
+						@if (r.Value.PhoneNumber != null)
+						{
+							<p>Customer phone number: @r.Value.PhoneNumber</p>
+						}
+						<p>Vehicle: @r.Value.VehicleName</p>
+					</div>
+						<input type="hidden" name="CustomerId" value="@r.Value.CustomerId" />
+						<input type="hidden" name="PickupDate" value="@r.Key.ToString(RentalDateFormat)" />
+						<input type="hidden" name="ReturnDate" value="@r.Value.ReturnDate.ToString(RentalDateFormat)" />
+						<input type="hidden" name="Price" value="@r.Value.Price" />
+						<input type="hidden" name="VehicleId" value="@r.Value.VehicleId" />
+						<input type="hidden" name="ReservationId" value="@r.Value.ReservationId" />
+						<input type="hidden" name="BranchId" value="@r.Value.BranchId" />
+					<button type="submit">Mark as rented</button>
+				</div>
+			</form>
+		}
+	}
+}
