@@ -8,7 +8,7 @@ namespace RentACar.Services.Data.Interfaces
         Task<IEnumerable<AddVehicleEngineViewModel>> GetAllEnginesAsync();
         Task<IEnumerable<DeleteEngineViewModel>> GetAllEnginesForDeletionAsync();
         Task<bool> CreateAndAddEngineAsync(CreateEngineViewModel model);
-        Task<bool> DeleteVehicleAsync(Guid engineId);
+        Task<bool> DeleteEngineAsync(Guid engineId);
 
     }
 }

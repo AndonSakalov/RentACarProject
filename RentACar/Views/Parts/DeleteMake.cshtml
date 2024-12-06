@@ -1,0 +1,28 @@
+﻿@model RentACar.Web.ViewModels.Parts.DeleteMakeViewModel;
+@{
+    ViewData["Title"] = "Delete make";
+}
+
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@ViewData["VehicleFullName"]</h3>
+                <p class="text-danger mt-3">Are you sure you want to delete @Model.Name</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="DeleteMake" asp-controller="Parts" method="post">
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <input type="hidden" asp-for="Name" value="@Model.Name" />
+                    <input type="hidden" asp-for="Country" value="@Model.Country" />
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a asp-controller="Parts" asp-action="GetAllMakes" class="btn btn-warning">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

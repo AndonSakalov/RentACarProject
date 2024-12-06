@@ -1,0 +1,66 @@
+﻿@model IEnumerable<RentACar.Web.ViewModels.Parts.DeleteMakeViewModel>
+@{
+	if (Model.Any())
+	{
+		ViewData["Title"] = "Makes";
+	}
+	else
+	{
+		ViewData["Title"] = "No makes found";
+	}
+}
+<head>
+	<link rel="stylesheet" href="~/css/site.css">
+</head>
+@if (Model.Any())
+{
+	<div class="header">
+		<h1 class="found-branches-title">@ViewData["Title"]</h1>
+	</div>
+
+	@if (TempData["Message"] != null)
+	{
+		string messageType = TempData["MessageType"]?.ToString();
+		string alertClass = messageType == "Success" ? "alert-success" : "alert-danger"; // Bootstrap classes
+		<div id="messageBox" class="alert @alertClass" role="alert">
+			@TempData["Message"]
+		</div>
+	}
+
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const messageBox = document.getElementById("messageBox");
+			if (messageBox) {
+				setTimeout(() => {
+					messageBox.style.transition = "opacity 1s ease-out";
+					messageBox.style.opacity = "0";
+					setTimeout(() => messageBox.remove(), 1000);
+				}, 3000);
+			}
+		});
+	</script>
+
+	<div class="branches-index-wrapper">
+		@foreach (var e in Model)
+		{
+			<div class="card h-100 bg-bluegradient mb-3" style="width: 100%;">
+				<div class="card-body d-flex flex-column">
+					<h5 class="card-title d-flex justify-content-center">@e.Name</h5>
+					<div class="d-flex justify-content-between mt-auto">
+						<a asp-controller="Parts" asp-action="DeleteMake"
+						   asp-route-Id="@e.Id"
+						   asp-route-Name="@e.Name"
+						   asp-route-Country="@e.Country"
+						   class="btn btn-info w-100">Delete</a>
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+}
+else
+{
+	<div class="header">
+		<h1 class="found-branches-title">@ViewData["Title"]</h1>
+	</div>
+}

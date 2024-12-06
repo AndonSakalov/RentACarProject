@@ -70,10 +70,35 @@
             </form>
         </div>
         <div class="col-md-6">
-            <form asp-action="GetAllEngines" asp-controller="Parts" method="get" class="h-100">
+            <form asp-action="GetAllMakes" asp-controller="Parts" method="get" class="h-100">
                 <div class="card h-100 bg-bluegradient">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title d-flex justify-content-center">Delete make</h5>
+                        <div class="d-flex justify-content-between mt-auto">
+                            <button type="submit" class="btn btn-info w-100">Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <form asp-action="CreateTransmission" asp-controller="Parts" method="get" class="h-100">
+                <div class="card h-100 bg-bluegradient">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title d-flex justify-content-center">Create transmission</h5>
+                        <div class="d-flex justify-content-between mt-auto">
+                            <button type="submit" class="btn btn-info w-100">Visit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <form asp-action="GetAllTransmissions" asp-controller="Parts" method="get" class="h-100">
+                <div class="card h-100 bg-bluegradient">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title d-flex justify-content-center">Delete transmission</h5>
                         <div class="d-flex justify-content-between mt-auto">
                             <button type="submit" class="btn btn-info w-100">Visit</button>
                         </div>
