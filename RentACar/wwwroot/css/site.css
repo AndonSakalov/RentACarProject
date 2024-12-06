@@ -335,5 +335,6 @@ div.reservation-box{
 }
 
 div.card h-100 bg-bluegradient{
-
+    margin-left:5em;
+    margin-right:5em;
 }

@@ -1,0 +1,28 @@
+﻿@model RentACar.Web.ViewModels.Parts.CreateMakeViewModel
+@{
+	ViewData["Title"] = "Create Make";
+}
+
+<div class="header">
+	<h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+<form method="post" asp-controller="Parts" asp-action="CreateMake">
+	<div class="row" id="add-vehicle">
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.Name" class="form-label-add-edit">Select make name...</label>
+			<input asp-for="Name" class="form-control" placeholder="Engine make name..." />
+			<span asp-validation-for="@Model.Name" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.Country" class="form-label-add-edit">Select make country...</label>
+			<input asp-for="Country" class="form-control" placeholder="Engine make country..." />
+			<span asp-validation-for="@Model.Country" class="text-danger"></span>
+		</div>
+
+		<div class="mb-2">
+			<input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Create Engine" />
+		</div>
+	</div>
+</form>
