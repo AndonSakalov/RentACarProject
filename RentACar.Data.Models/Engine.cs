@@ -52,5 +52,7 @@ namespace RentACar.Data.Models
         [Required]
         [Comment("Whether the engine is electric or not.")]
         public bool IsElectric { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

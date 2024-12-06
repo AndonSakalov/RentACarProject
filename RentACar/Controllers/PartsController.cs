@@ -36,8 +36,6 @@ namespace RentACar.Controllers
                 .ToList();
 
             ViewBag.FuelTypesList = fuelTypesList;
-            //CreateEngineViewModel model = new CreateEngineViewModel();
-            //         model.FuelType = fuelTypesList;
 
             return this.View();
         }
@@ -108,6 +106,48 @@ namespace RentACar.Controllers
             TempData["MessageType"] = "Success";
 
             return RedirectToAction(nameof(SelectAction), "Parts");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllEngines()
+        {
+            var engines = await engineService.GetAllEnginesForDeletionAsync();
+
+            return this.View(engines);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteEngine(string id, int hp, string fuelType, int cylindersCount, decimal displacement)
+        {
+            DeleteEngineViewModel model = new DeleteEngineViewModel()
+            {
+                Id = Guid.Parse(id),
+                HP = hp,
+                FuelType = fuelType,
+                CylindersCount = cylindersCount,
+                Displacement = displacement
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteEngine(DeleteEngineViewModel model)
+        {
+            bool isSuccessful = await engineService.DeleteVehicleAsync(model.Id);
+
+            if (!isSuccessful)
+            {
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+
+                return RedirectToAction(nameof(GetAllEngines), "Parts");
+            }
+
+            TempData["Message"] = $"You have successfully deleted {model.DisplayName} engine.";
+            TempData["MessageType"] = "Success";
+
+            return RedirectToAction(nameof(GetAllEngines), "Parts");
         }
     }
 }

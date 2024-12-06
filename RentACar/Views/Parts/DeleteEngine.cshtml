@@ -1,0 +1,30 @@
+﻿@model RentACar.Web.ViewModels.Parts.DeleteEngineViewModel;
+@{
+    ViewData["Title"] = "Delete engine";
+}
+
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title text-center">@ViewData["VehicleFullName"]</h3>
+                <p class="text-danger mt-3">Are you sure you want to delete @Model.DisplayName</p>
+            </div>
+            <div class="card-footer">
+                <form asp-action="DeleteEngine" asp-controller="Parts" method="post">
+                    <input type="hidden" asp-for="Id" value="@Model.Id"/>
+                    <input type="hidden" asp-for="Displacement" value="@Model.Displacement" />
+                    <input type="hidden" asp-for="CylindersCount" value="@Model.CylindersCount" />
+                    <input type="hidden" asp-for="FuelType" value="@Model.FuelType" />
+                    <input type="hidden" asp-for="HP" value="@Model.HP" />
+                    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                    <a asp-controller="Parts" asp-action="GetAllEngines" class="btn btn-warning">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

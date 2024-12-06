@@ -9,6 +9,9 @@ namespace RentACar.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Transmission> builder)
         {
+            builder.Property(t => t.IsDeleted)
+                .HasDefaultValue(false);
+
             builder.HasData(SeedTransmissions());
         }
 

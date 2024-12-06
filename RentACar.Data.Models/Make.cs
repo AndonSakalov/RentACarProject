@@ -26,6 +26,7 @@ namespace RentACar.Data.Models
         [Comment("Country of the make.")]
         public string Country { get; set; } = null!;
 
+        public bool IsDeleted { get; set; }
         public virtual ICollection<Vehicle> Vehicles { get; set; }
     }
 }

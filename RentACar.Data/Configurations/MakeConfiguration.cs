@@ -8,6 +8,9 @@ namespace RentACar.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Make> builder)
         {
+            builder.Property(m => m.IsDeleted)
+                .HasDefaultValue(false);
+
             builder.HasData(SeedData());
         }
 

@@ -20,9 +20,11 @@ namespace RentACar.Data.Models
         [Range(MinGearsCount, MaxGearsCount)]
         [Comment("The count of gears for the transmission.")]
         public int GearsCount { get; set; }
+        public bool IsDeleted { get; set; }
 
         [Required]
         [Comment("The type of the transmission(manual or automatic).")]
+
         public TransmissionType Type { get; set; }
     }
 }
