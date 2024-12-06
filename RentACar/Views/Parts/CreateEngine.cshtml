@@ -1,0 +1,60 @@
+﻿@model RentACar.Web.ViewModels.Parts.CreateEngineViewModel
+@{
+	ViewData["Title"] = "Create Engine";
+}
+
+<div class="header">
+	<h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+<form method="post" asp-controller="Parts" asp-action="CreateEngine">
+	<div class="row" id="add-vehicle">
+		<div class="col-sm-6 mb-2">
+			<label asp-for="FuelType" class="form-label-add-edit">Select Fuel Type</label>
+			<select asp-for="FuelType" class="form-control" aria-required="true" asp-items="ViewBag.FuelTypesList">
+				<option value="">Select Fuel Type...</option>
+			</select>
+			<span asp-validation-for="FuelType" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.HP" class="form-label-add-edit">Select Horse-Power...</label>
+			<input asp-for="HP" class="form-control" placeholder="Engine horse power..." />
+			<span asp-validation-for="@Model.HP" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.Torque" class="form-label-add-edit">Select Torque...</label>
+			<input asp-for="Torque" class="form-control" placeholder="Engine Torque..." />
+			<span asp-validation-for="@Model.Torque" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.FuelEfficiency" class="form-label-add-edit">Select FuelEfficiency...</label>
+			<input asp-for="FuelEfficiency" class="form-control" placeholder="Engine FuelEfficiency..." />
+			<span asp-validation-for="@Model.FuelEfficiency" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.Displacement" class="form-label-add-edit">Select engine volume...</label>
+			<input asp-for="Displacement" class="form-control" placeholder="Engine Displacement..." />
+			<span asp-validation-for="@Model.Displacement" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.CylindersCount" class="form-label-add-edit">Select cylinders count...</label>
+			<input asp-for="CylindersCount" class="form-control" placeholder="Engine cylinders count..." />
+			<span asp-validation-for="@Model.CylindersCount" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.Description" class="form-label-add-edit">Type description...</label>
+			<textarea asp-for="Description" class="form-control" placeholder="Engine description..."></textarea>
+			<span asp-validation-for="@Model.Description" class="text-danger"></span>
+		</div>
+
+		<div class="mb-2">
+			<input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Create Engine" />
+		</div>
+	</div>
+</form>

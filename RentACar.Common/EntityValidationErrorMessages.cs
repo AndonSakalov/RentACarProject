@@ -16,7 +16,29 @@
         public static class Vehicle
         {
             public const string ColorIsRequired = "Vehicle color is required.";
+        }
 
+        public static class Engine
+        {
+            public const string HPIsRequiredMessage = "Horse power for the engine is required.";
+            public const string HPRangeMessage = "The horse power can be between 60 and 2000.";
+
+            public const string TorqueRangeMessage = "Torque can be between 100 and 1500.";
+
+            public const string FuelEfficiencyIsRequiredMessage = "Fuel efficiency is required.";
+            public const string FuelEfficiencyRangeMessage = "Fuel efficiency can be between 1 and 50.";
+
+            public const string DisplacementIsRequiredMessage = "Displacement is required.";
+            public const string DisplacementRangeMessage = "Displacement can be between 1 and 10.";
+
+            public const string CylindersCountIsRequiredMessage = "Cylinders count is required.";
+            public const string CylindersCountRangeMessage = "Cylinders count can be between 4 and 16.";
+
+            public const string DescriptionMaxLengthMessage = "Description can be up to 500 symbols.";
+
+            public const string DisplacementErrorMessageForElectric = "Electric engines can not have displacement.";
+            public const string CylindersCountErrorMessageForElectric = "Electric engines can not have cylinders.";
+            public const string FuelEfficiencyErrorMessageForElectric = "Electric engines can not have fuel efficiency.";
         }
     }
 }

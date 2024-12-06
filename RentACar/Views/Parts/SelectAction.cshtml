@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Actions for vehicle parts";
+}
+<head>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<div class="header">
+    <h1 class="found-branches-title">@ViewData["Title"]</h1>
+</div>
+
+@if (TempData["Message"] != null)
+{
+    string messageType = TempData["MessageType"]?.ToString();
+    string alertClass = messageType == "Success" ? "alert-success" : "alert-danger"; // Bootstrap classes
+    <div id="messageBox" class="alert @alertClass" role="alert">
+        @TempData["Message"]
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const messageBox = document.getElementById("messageBox");
+        if (messageBox) {
+            setTimeout(() => {
+                messageBox.style.transition = "opacity 1s ease-out";
+                messageBox.style.opacity = "0";
+                setTimeout(() => messageBox.remove(), 1000);
+            }, 3000);
+        }
+    });
+</script>
+
+<div class="branches-index-wrapper">
+    <form asp-action="CreateEngine" asp-controller="Parts" method="get" class="col-md-3 mb-4 ms-auto me-auto">
+        <div class="card h-100 bg-bluegradient" style="width: 100%;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Create engine</h5>
+                <div class="d-flex justify-content-between mt-auto">
+                    <button type="submit" class="btn btn-info w-100">Visit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form asp-action="Vehicles" asp-controller="Vehicle" method="get" class="col-md-3 mb-4 ms-auto me-auto">
+        <div class="card h-100 bg-bluegradient" style="width: 100%;">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">Delete vehicle part</h5>
+                <div class="d-flex justify-content-between mt-auto">
+                    <button type="submit" class="btn btn-info w-100">Visit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

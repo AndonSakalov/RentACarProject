@@ -34,6 +34,12 @@
 								<a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="Add">Add vehicle to the system</a>
 							</li>
 						}
+						@if (User.IsInRole("Staff") || User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-dark" asp-area="" asp-controller="Parts" asp-action="SelectAction">Vehicle parts</a>
+							</li>
+						}
 						@if (User.IsInRole("Admin"))
 						{
 							<li class="nav-item">
