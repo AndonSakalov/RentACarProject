@@ -1,17 +1,15 @@
-﻿@model IEnumerable<RentACar.Web.ViewModels.Parts.DeleteMakeViewModel>
+﻿@model IEnumerable<RentACar.Web.ViewModels.Parts.DeleteTransmissionViewModel>
 @{
-	if (Model.Any())
+	if(Model.Any())
 	{
-		ViewData["Title"] = "Makes";
+		ViewData["Title"] = "Transmissions";
 	}
 	else
 	{
-		ViewData["Title"] = "No makes found";
+		ViewData["Title"] = "No transmissions found";
 	}
 }
-<head>
-	<link rel="stylesheet" href="~/css/site.css">
-</head>
+
 @if (Model.Any())
 {
 	<div class="header">
@@ -41,16 +39,16 @@
 	</script>
 
 	<div class="branches-index-wrapper">
-		@foreach (var m in Model)
+		@foreach (var t in Model)
 		{
 			<div class="card h-100 bg-bluegradient mb-3" style="width: 100%;">
 				<div class="card-body d-flex flex-column">
-					<h5 class="card-title d-flex justify-content-center">@m.Name</h5>
+					<h5 class="card-title d-flex justify-content-center">@t.DisplayName</h5>
 					<div class="d-flex justify-content-between mt-auto">
-						<a asp-controller="Parts" asp-action="DeleteMake"
-						   asp-route-Id="@m.Id"
-						   asp-route-Name="@m.Name"
-						   asp-route-Country="@m.Country"
+						<a asp-controller="Parts" asp-action="DeleteTransmission"
+						   asp-route-Id="@t.Id"
+						   asp-route-GearsCount="@t.GearsCount"
+						   asp-route-TransmissionType="@t.TransmissionType"
 						   class="btn btn-info w-100">Delete</a>
 					</div>
 				</div>

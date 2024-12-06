@@ -12,12 +12,10 @@
 			public const string PickUpDateAndReturnDateAreTheSameMessage = "Pick-up date and return date can not be the same.";
 			public const string PickUpDateIsBeforeCurrentDate = "Pick-up date can not be before now.";
 		}
-
 		public static class Vehicle
 		{
 			public const string ColorIsRequired = "Vehicle color is required.";
 		}
-
 		public static class Engine
 		{
 			public const string HPIsRequiredMessage = "Horse power for the engine is required.";
@@ -49,6 +47,11 @@
 			public const string CountryIsRequiredMessage = "Country name is required for creation.";
 			public const string CountryMinLengthMessage = "Country name should be atleast 3 symbols.";
 			public const string CountryMaxLengthMessage = "Country name can be up to 100 symbols.";
+		}
+		public static class Transmission
+		{
+			public const string GearsCountIsRequired = "Gears count is required to create a transmission.";
+			public const string GearsCountRangeMessage = "Gears count can be between 1 and 12.";
 		}
 	}
 }

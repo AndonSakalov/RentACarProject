@@ -14,12 +14,16 @@ namespace RentACar.Controllers
     {
         private readonly IEngineService engineService;
         private readonly IMakeService makeService;
+        private readonly ITransmissionService transmissionService;
 
-        public PartsController(IEngineService engineService, IMakeService makeService)
+        public PartsController(IEngineService engineService, IMakeService makeService, ITransmissionService transmissionService)
         {
             this.engineService = engineService;
             this.makeService = makeService;
+            this.transmissionService = transmissionService;
         }
+
+        [HttpGet]
         public IActionResult SelectAction()
         {
             return View();
@@ -121,16 +125,27 @@ namespace RentACar.Controllers
         [HttpGet]
         public IActionResult DeleteEngine(string id, int hp, string fuelType, int cylindersCount, decimal displacement)
         {
-            DeleteEngineViewModel model = new DeleteEngineViewModel()
+            try
             {
-                Id = Guid.Parse(id),
-                HP = hp,
-                FuelType = fuelType,
-                CylindersCount = cylindersCount,
-                Displacement = displacement
-            };
+                DeleteEngineViewModel model = new DeleteEngineViewModel()
+                {
+                    Id = Guid.Parse(id),
+                    HP = hp,
+                    FuelType = fuelType,
+                    CylindersCount = cylindersCount,
+                    Displacement = displacement
+                };
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+                return RedirectToAction("Index", "Home");
+            }
+
         }
 
         [HttpPost]
@@ -192,14 +207,23 @@ namespace RentACar.Controllers
         [HttpGet]
         public IActionResult DeleteMake(string id, string name, string country)
         {
-            DeleteMakeViewModel model = new DeleteMakeViewModel()
+            try
             {
-                Id = Guid.Parse(id),
-                Name = name,
-                Country = country
-            };
+                DeleteMakeViewModel model = new DeleteMakeViewModel()
+                {
+                    Id = Guid.Parse(id),
+                    Name = name,
+                    Country = country
+                };
 
-            return this.View(model);
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
@@ -218,6 +242,107 @@ namespace RentACar.Controllers
             TempData["MessageType"] = "Success";
 
             return RedirectToAction(nameof(GetAllMakes), "Parts");
+        }
+
+        [HttpGet]
+        public IActionResult CreateTransmission()
+        {
+            var transmissionTypesList = Enum.GetValues(typeof(TransmissionType))
+                .Cast<TransmissionType>()
+                .Select(tt => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = ((int)tt).ToString(),
+                    Text = tt.ToString()
+                })
+                .ToList();
+
+            ViewBag.TransmissionTypes = transmissionTypesList;
+
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTransmission(CreateTransmissionViewModel model)
+        {
+            var transmissionTypesList = Enum.GetValues(typeof(TransmissionType))
+                .Cast<TransmissionType>()
+                .Select(tt => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = ((int)tt).ToString(),
+                    Text = tt.ToString()
+                })
+                .ToList();
+
+            ViewBag.TransmissionTypes = transmissionTypesList;
+
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            bool isSuccessful = await transmissionService.CreateTransmissionAsync(model);
+
+            if (!isSuccessful)
+            {
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+
+                return RedirectToAction(nameof(SelectAction), "Parts");
+            }
+
+            TempData["Message"] = $"You have successfully created and added {model.DisplayName}";
+            TempData["MessageType"] = "Success";
+
+            return RedirectToAction(nameof(SelectAction), "Parts");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTransmissions()
+        {
+            var transmissions = await transmissionService.GetAllTransmissionsForDeletionAsync();
+
+            return View(transmissions);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteTransmission(string id, int gearsCount, string transmissionType)
+        {
+            try
+            {
+                DeleteTransmissionViewModel model = new DeleteTransmissionViewModel()
+                {
+                    Id = Guid.Parse(id),
+                    GearsCount = gearsCount,
+                    TransmissionType = transmissionType
+                };
+
+                return this.View(model);
+            }
+            catch (Exception)
+            {
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteTransmission(DeleteTransmissionViewModel model)
+        {
+            bool isSuccessful = await transmissionService.DeleteTransmissionAsync(model.Id);
+
+            if (!isSuccessful)
+            {
+                TempData["Message"] = "Something went wrong. Please contact system administrator.";
+                TempData["MessageType"] = "Error";
+
+                return RedirectToAction(nameof(GetAllTransmissions), "Parts");
+            }
+
+            TempData["Message"] = $"You have successfully deleted {model.DisplayName}.";
+            TempData["MessageType"] = "Success";
+
+            return RedirectToAction(nameof(GetAllTransmissions), "Parts");
         }
     }
 }

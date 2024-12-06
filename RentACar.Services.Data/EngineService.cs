@@ -44,17 +44,19 @@ namespace RentACar.Services.Data
 
         public async Task<bool> DeleteEngineAsync(Guid engineId)
         {
-            Engine engineToDelete = await engineRepository.GetByIdAsync(engineId);
+            try
+            {
+                Engine engineToDelete = await engineRepository.GetByIdAsync(engineId);
 
-            if (engineToDelete == null)
+                engineToDelete.IsDeleted = true;
+                await engineRepository.UpdateAsync(engineToDelete);
+
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
-
-            engineToDelete.IsDeleted = true;
-            await engineRepository.UpdateAsync(engineToDelete);
-
-            return true;
         }
 
         public async Task<IEnumerable<AddVehicleEngineViewModel>> GetAllEnginesAsync()
