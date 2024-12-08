@@ -33,12 +33,12 @@
             </div>
         </div>
     </form>
-    <form asp-action="VehiclesRentalEndingToday" asp-controller="Vehicle" method="get" class="col-md-3 mb-4 ms-auto me-auto">
+    <form asp-action="GetAllRentals" asp-controller="Rental" method="get" class="col-md-3 mb-4 ms-auto me-auto">
         <input type="hidden" name="BranchId" value="@ViewData["BranchId"]" />
         <input type="hidden" name="City" value="@ViewData["City"]" />
         <div class="card h-100 bg-bluegradient" style="width: 100%;">
             <div class="card-body d-flex flex-column">
-                <h5 class="card-title">Vehicles rentals due for today</h5>
+                <h5 class="card-title">Vehicles rentals</h5>
                 <div class="d-flex justify-content-between mt-auto">
                     <button type="submit" class="btn btn-info w-100">Visit</button>
                 </div>

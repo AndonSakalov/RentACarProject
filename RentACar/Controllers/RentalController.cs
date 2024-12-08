@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RentACar.Data.Models;
+using RentACar.Data.Models.Enums;
 using RentACar.Services.Data.Interfaces;
 using RentACar.Web.ViewModels.Rental;
 
@@ -106,6 +107,103 @@ namespace RentACar.Controllers
 			TempData["MessageType"] = "Success";
 
 			return RedirectToAction(nameof(ReservationsForCurrentBranch), new { model.BranchId });
+		}
+
+		public async Task<IActionResult> GetAllRentals(string branchId)
+		{
+			(bool isSuccessful, RentalsCompositeViewModel? rentals) = await rentalService.GetAllRentalsForBranchAsync(branchId);
+
+			if (!isSuccessful)
+			{
+				TempData["Message"] = "Something went wrong while fetching rentals. Please contact system administration.";
+				TempData["MessageType"] = "Error";
+
+				return RedirectToAction("Index", "Home");
+			}
+
+			return this.View(rentals);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> EndRental(string id, string vehicleId)
+		{
+			(bool isSuccessful, EndRentalViewModel? model) result = await rentalService.GetVehicleRentalToRemoveAsync(id, vehicleId);
+
+			if (result.isSuccessful == false)
+			{
+				TempData["Message"] = "Something went wrong with fetching the rental. Please contact system administration.";
+				TempData["MessageType"] = "Error";
+
+				return RedirectToAction("Index", "Home");
+			}
+
+			var paymentMethods = Enum.GetValues(typeof(PaymentMethod))
+			   .Cast<PaymentMethod>()
+			   .Select(pm => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+			   {
+				   Value = ((int)pm).ToString(),
+				   Text = pm.ToString()
+			   })
+			   .ToList();
+
+			var paymentStatuses = Enum.GetValues(typeof(PaymentStatus))
+		   .Cast<PaymentStatus>()
+		   .Select(ps => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+		   {
+			   Value = ((int)ps).ToString(),
+			   Text = ps.ToString()
+		   })
+		   .ToList();
+
+			ViewBag.PaymentStatusesList = paymentStatuses;
+			ViewBag.PaymentMethodsList = paymentMethods;
+
+			return this.View(result.model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> EndRental(EndRentalViewModel model)
+		{
+			var paymentMethods = Enum.GetValues(typeof(PaymentMethod))
+			   .Cast<PaymentMethod>()
+			   .Select(pm => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+			   {
+				   Value = ((int)pm).ToString(),
+				   Text = pm.ToString()
+			   })
+			   .ToList();
+
+			var paymentStatuses = Enum.GetValues(typeof(PaymentStatus))
+		   .Cast<PaymentStatus>()
+		   .Select(ps => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+		   {
+			   Value = ((int)ps).ToString(),
+			   Text = ps.ToString()
+		   })
+		   .ToList();
+
+			ViewBag.PaymentStatusesList = paymentStatuses;
+			ViewBag.PaymentMethodsList = paymentMethods;
+
+			if (!ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			bool isSuccessful = await rentalService.EndRentalAsync(model);
+
+			if (!isSuccessful)
+			{
+				TempData["Message"] = "Something went wrong with ending the rental. Please contact system administration.";
+				TempData["MessageType"] = "Error";
+
+				return RedirectToAction("GetAllRentals", "Rental", new { model.BranchId });
+			}
+
+			TempData["Message"] = $"You have successfully ended rental of customer with email: {model.CustomerEmail} and vehicle: {model.VehicleName}.";
+			TempData["MessageType"] = "Success";
+
+			return RedirectToAction("GetAllRentals", "Rental", new { model.BranchId });
 		}
 	}
 }

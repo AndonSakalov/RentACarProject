@@ -1,0 +1,55 @@
+﻿@model RentACar.Web.ViewModels.Rental.EndRentalViewModel;
+@{
+    ViewData["VehicleFullName"] = $"{Model.VehicleName}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<form method="post" asp-controller="Rental" asp-action="EndRental">
+	<div class="border p-3 bg-white" style="width: 200px; height: 150px;">
+		<p>Rental price: @Model.AmountRequired</p>
+	</div>
+	<div class="row" id="add-vehicle">
+		<p></p>
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.PaymentMethod" class="form-label-add-edit">Select payment method</label>
+			<select asp-for="PaymentMethod" class="form-control" aria-required="true" asp-items="ViewBag.PaymentMethodsList">
+				<option value="">Select payment method...</option>
+			</select>
+			<span asp-validation-for="PaymentMethod" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.PaymentStatus" class="form-label-add-edit">Select payment status</label>
+			<select asp-for="PaymentStatus" class="form-control" aria-required="true" asp-items="ViewBag.PaymentStatusesList">
+				<option value="">Select payment status...</option>
+			</select>
+			<span asp-validation-for="PaymentStatus" class="text-danger"></span>
+		</div>
+
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.PaymentAmount" class="form-label-add-edit">Select payment amount...</label>
+			<input asp-for="PaymentAmount" class="form-control" placeholder="Payment amount..." />
+			<span asp-validation-for="@Model.PaymentAmount" class="text-danger"></span>
+		</div>
+
+		<input type="hidden" asp-for="VehicleId" value="@Model.VehicleId" />
+		<input type="hidden" asp-for="RentalId" value="@Model.RentalId" />
+		<input type="hidden" asp-for="CustomerId" value="@Model.CustomerId" />
+		<input type="hidden" asp-for="BranchId" value="@Model.BranchId" />
+		<input type="hidden" asp-for="CustomerEmail" value="@Model.CustomerEmail" />
+		<input type="hidden" asp-for="VehicleName" value="@Model.VehicleName" />
+		<input type="hidden" asp-for="PaymentId" value="@Model.PaymentId" />
+		<input type="hidden" asp-for="AmountRequired" value="@Model.AmountRequired" />
+
+		<div class="mb-2">
+			<input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="End Rental" />
+		</div>
+		<a asp-controller="Rental" asp-action="GetAllRentals"
+		   asp-route-branchId="@Model.BranchId"
+		   class="btn btn-info w-100">Cancel</a>
+	</div>
+</form>

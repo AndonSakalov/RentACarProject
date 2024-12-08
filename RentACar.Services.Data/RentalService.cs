@@ -6,6 +6,7 @@ using RentACar.Web.ViewModels.Rental;
 using System.Globalization;
 using static RentACar.Common.EntityValidationConstants.Branch;
 
+
 namespace RentACar.Services.Data
 {
 	public class RentalService : BaseService, IRentalService
@@ -27,6 +28,126 @@ namespace RentACar.Services.Data
 			this.branchRepository = branchRepository;
 			this.reservationRepository = reservationRepository;
 			this.applicationUserRepository = applicationUserRepository;
+		}
+
+		public async Task<bool> EndRentalAsync(EndRentalViewModel model)
+		{
+			try
+			{
+				Rental? rental = await rentalRepository.GetAllAttached()
+				.Where(r => r.Id == model.RentalId && r.IsActive == true)
+				.Include(r => r.Payment)
+				.FirstOrDefaultAsync();
+
+				Vehicle? vehicle = await vehicleRepository.GetAllAttached()
+					.Where(v => v.Id == model.VehicleId && v.IsDeleted == false)
+					.Include(v => v.Rental)
+					.FirstOrDefaultAsync();
+
+				ApplicationUser? user = await applicationUserRepository.GetAllAttached()
+					.Where(u => u.Id == model.CustomerId)
+					.FirstOrDefaultAsync();
+
+				if (rental == null || vehicle == null || user == null)
+				{
+					return false;
+				}
+
+				rental.Payment.PaymentDate = DateTime.Now;
+				rental.Payment.Status = model.PaymentStatus;
+				rental.Payment.Amount = model.PaymentAmount;
+				rental.Payment.PaymentMethod = model.PaymentMethod;
+				rental.IsActive = false;
+				await rentalRepository.UpdateAsync(rental);
+
+				vehicle.Rental = null;
+				vehicle.RentalId = null;
+				await vehicleRepository.UpdateAsync(vehicle);
+
+				return true;
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+		}
+
+		public async Task<(bool isSuccessful, RentalsCompositeViewModel? rentals)> GetAllRentalsForBranchAsync(string branchId)
+		{
+			Guid validBranchId = Guid.Empty;
+			bool isGuidValid = IsGuidValid(branchId, ref validBranchId);
+			if (!isGuidValid)
+			{
+				return (false, null);
+			}
+
+			Branch? branch = await branchRepository.GetAllAttached()
+													.Where(b => b.Id == validBranchId)
+													.Include(b => b.Vehicles)
+													.ThenInclude(v => v.Rental)
+													.ThenInclude(r => r!.Payment)
+													.Include(b => b.Vehicles)
+													.ThenInclude(v => v.Rental)
+													.ThenInclude(r => r.Customer)
+													.Include(b => b.Vehicles)
+													.ThenInclude(v => v.Make)
+													.Include(b => b.Vehicles)
+													.ThenInclude(v => v.Transmission)
+													.SingleOrDefaultAsync();
+
+			if (branch == null)
+			{
+				return (false, null);
+			}
+
+			var rentals = branch.Vehicles
+				.Where(v => v.Rental != null)
+				.ToList()
+				.Select(v => new RentalViewModel()
+				{
+					Id = v.Rental!.Id,
+					Customer = new CustomerViewModel()
+					{
+						Id = v.Rental.CustomerId,
+						Email = v.Rental.Customer.Email!,
+						UserName = v.Rental.Customer.UserName!,
+						PhoneNumber = v.Rental.Customer.PhoneNumber
+					},
+					Vehicle = new RentalVehicleViewModel()
+					{
+						Id = v.Id,
+						SeatsCount = v.SeatsCount,
+						ImageUrl = v.ImageUrl!,
+						Name = $"{v.Make.Name} {v.Model}",
+						TransmissionType = v.Transmission.Type.ToString(),
+					},
+					StartDate = v.Rental.StartDate,
+					EndDate = v.Rental.EndDate,
+					TotalPrice = v.Rental.TotalPrice,
+					BranchId = validBranchId,
+					BranchName = branch.Name,
+					Payment = new PaymentViewModel()
+					{
+						Id = v.Rental.Payment.Id,
+						PaymentMethod = v.Rental.Payment.PaymentMethod,
+						PaymentStatus = v.Rental.Payment.Status,
+					}
+				})
+				.ToList();
+
+			var uniqueDates = rentals
+				.Select(r => r.EndDate)
+				.Distinct()
+				.OrderBy(d => d)
+				.ToList();
+
+			RentalsCompositeViewModel model = new RentalsCompositeViewModel()
+			{
+				Rentals = rentals,
+				UniqueDates = uniqueDates
+			};
+
+			return (true, model);
 		}
 
 		public async Task<(bool isIdValid, ReservationCompositeViewModel? dict)> GetReservationsAsync(string branchId)
@@ -58,7 +179,7 @@ namespace RentACar.Services.Data
 					Reservation = r,
 					Vehicle = v
 				}))
-				.Where(r => r.Reservation.isActive == true)
+				.Where(r => r.Reservation.IsActive == true)
 				.ToDictionary(
 					rv => rv.Reservation.PickUpDate,
 					rv => new StaffReservationViewModel
@@ -93,6 +214,49 @@ namespace RentACar.Services.Data
 			return (true, model);
 		}
 
+		public async Task<(bool isSuccessful, EndRentalViewModel? model)> GetVehicleRentalToRemoveAsync(string id, string vehicleId)
+		{
+			Guid validRentalId = Guid.Empty;
+			Guid validVehicleId = Guid.Empty;
+			bool isVehicleGuidValid = IsGuidValid(vehicleId, ref validVehicleId);
+			bool isRentalGuidValid = IsGuidValid(id, ref validRentalId);
+			if (!isRentalGuidValid || !isVehicleGuidValid)
+			{
+				return (false, null);
+			}
+
+			Rental? rental = await rentalRepository.GetAllAttached()
+				.Where(r => r.Id == validRentalId)
+				.Include(r => r.Customer)
+				.FirstOrDefaultAsync();
+
+			Vehicle? vehicle = await vehicleRepository.GetAllAttached()
+				.Where(v => v.Id == validVehicleId)
+				.Include(v => v.Make)
+				.FirstOrDefaultAsync();
+
+			if (rental == null || vehicle == null)
+			{
+				return (false, null);
+			}
+
+			EndRentalViewModel model = new EndRentalViewModel()
+			{
+				CustomerId = rental.CustomerId,
+				VehicleId = vehicle.Id,
+				VehicleName = $"{vehicle.Make.Name} {vehicle.Model}",
+				CustomerEmail = rental.Customer.Email!,
+				RentalId = rental.Id,
+				PaymentId = rental.PaymentId,
+				BranchId = vehicle.BranchId,
+				AmountRequired = rental.TotalPrice,
+			};
+
+
+			return (true, model);
+
+		}
+
 		public async Task<bool> ReserveVehicleAsync(DealViewModel model, string userId)
 		{
 			Guid validUserId = Guid.Empty;
@@ -108,7 +272,8 @@ namespace RentACar.Services.Data
 				VehicleId = model.Vehicle.Id,
 				PickUpDate = model.PickupDate,
 				ReturnDate = model.ReturnDate,
-				Price = model.Price
+				Price = model.Price,
+				IsActive = true
 			};
 
 			await reservationRepository.AddAsync(reservation);
@@ -131,16 +296,17 @@ namespace RentACar.Services.Data
 					{
 					}
 				};
-
-				await rentalRepository.AddAsync(rental);
-
 				Vehicle vehicle = await vehicleRepository.GetByIdAsync(model.VehicleId);
 				vehicle.RentalId = rental.Id;
+
+				rental.Vehicle = vehicle;
+				await rentalRepository.AddAsync(rental);
+
 				await vehicleRepository.UpdateAsync(vehicle);
 
 
 				Reservation reservation = await reservationRepository.GetByIdAsync(model.ReservationId);
-				reservation.isActive = false;
+				reservation.IsActive = false;
 				await reservationRepository.UpdateAsync(reservation);
 
 				var user = await applicationUserRepository.GetByIdAsync(model.CustomerId);

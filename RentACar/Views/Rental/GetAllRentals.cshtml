@@ -1,0 +1,68 @@
+﻿@using RentACar.Web.ViewModels.Rental;
+@using static RentACar.Common.EntityValidationConstants.Branch;
+@model RentalsCompositeViewModel
+
+@if (!Model.Rentals.Any())
+{
+	ViewData["Title"] = "No rentals found!";
+}
+else
+{
+	ViewData["Title"] = $"Rentals for {Model.Rentals.First().BranchName}";
+}
+
+<h2 class="found-branches-title">@ViewData["Title"]</h2>
+@if (TempData["Message"] != null)
+{
+	string messageType = TempData["MessageType"]?.ToString();
+	string alertClass = messageType == "Success" ? "alert-success" : "alert-danger"; // Bootstrap classes
+	<div id="messageBox" class="alert @alertClass" role="alert">
+		@TempData["Message"]
+	</div>
+}
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const messageBox = document.getElementById("messageBox");
+		if (messageBox) {
+			setTimeout(() => {
+				messageBox.style.transition = "opacity 1s ease-out";
+				messageBox.style.opacity = "0";
+				setTimeout(() => messageBox.remove(), 1000);
+			}, 3000);
+		}
+	});
+</script>
+
+@foreach (var date in Model.UniqueDates)
+{
+	if (date.Date == DateTime.Now.Date)
+	{
+		<h3>Rentals ending today:</h3>
+	}
+	else
+	{
+		<h3>Rentals ending on @date.ToString("dd/MM/yyyy"):</h3>
+	}
+	foreach (var r in Model.Rentals)
+	{
+		if (r.EndDate.Date == date.Date)
+		{
+			<div class="reservation-box">
+				<div class="reservation-box-info">
+					<p>Customer email: @r.Customer.Email</p>
+					<p>Customer Username: @r.Customer.UserName</p>
+					@if (r.Customer.PhoneNumber != null)
+					{
+						<p>Customer phone number: @r.Customer.PhoneNumber</p>
+					}
+					<p>Vehicle: @r.Vehicle.Name</p>
+				</div>
+				<a asp-controller="Rental" asp-action="EndRental"
+				   asp-route-Id="@r.Id"
+				   asp-route-VehicleId="@r.Vehicle.Id"
+				   class="btn btn-info w-100">Mark as rent over</a>
+			</div>
+		}
+	}
+}

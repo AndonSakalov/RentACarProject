@@ -22,6 +22,11 @@ namespace RentACar.Data.Configurations
 
 			builder.Property(v => v.IsRented)
 				.HasDefaultValue(false);
+
+			builder.HasOne(v => v.Rental)
+		   .WithOne(r => r.Vehicle)
+		   .HasForeignKey<Vehicle>(v => v.RentalId)
+		   .OnDelete(DeleteBehavior.SetNull);
 		}
 
 		private ICollection<Vehicle> SeedVehicles()

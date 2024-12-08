@@ -37,6 +37,6 @@ namespace RentACar.Data.Models
 		public decimal Price { get; set; }
 
 		[Required]
-		public bool isActive { get; set; }
+		public bool IsActive { get; set; }
 	}
 }

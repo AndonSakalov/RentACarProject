@@ -55,14 +55,15 @@ namespace RentACar.Services.Data
 
         public async Task<IEnumerable<AddVehicleTransmissionViewModel>> GetAllTransmissionsAsync()
         {
-            var allTransmissions = (await transmissionRepository.GetAllAsync())
-                .ToList()
+            var allTransmissions = await transmissionRepository.GetAllAttached()
+                .Where(t => t.IsDeleted == false)
                 .Select(t => new AddVehicleTransmissionViewModel()
                 {
                     Id = t.Id,
                     Type = t.Type.ToString(),
                     GearsCount = t.GearsCount
-                });
+                })
+                .ToListAsync();
 
             return allTransmissions;
         }

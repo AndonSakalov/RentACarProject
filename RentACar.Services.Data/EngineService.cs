@@ -62,6 +62,7 @@ namespace RentACar.Services.Data
         public async Task<IEnumerable<AddVehicleEngineViewModel>> GetAllEnginesAsync()
         {
             var allEngines = (await engineRepository.GetAllAsync())
+                .Where(e => e.IsDeleted == false)
                 .ToList()
                 .Select(e => new AddVehicleEngineViewModel()
                 {

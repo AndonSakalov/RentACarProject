@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACar.Data;
 
@@ -11,9 +12,11 @@ using RentACar.Data;
 namespace RentACar.Data.Migrations
 {
     [DbContext(typeof(RentACarDbContext))]
-    partial class RentACarDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241208124515_IsActivePropNameChange")]
+    partial class IsActivePropNameChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -830,9 +833,7 @@ namespace RentACar.Data.Migrations
 
                     b.HasIndex("MakeId");
 
-                    b.HasIndex("RentalId")
-                        .IsUnique()
-                        .HasFilter("[RentalId] IS NOT NULL");
+                    b.HasIndex("RentalId");
 
                     b.HasIndex("TransmissionId");
 
@@ -1162,9 +1163,8 @@ namespace RentACar.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("RentACar.Data.Models.Rental", "Rental")
-                        .WithOne("Vehicle")
-                        .HasForeignKey("RentACar.Data.Models.Vehicle", "RentalId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("RentalId");
 
                     b.HasOne("RentACar.Data.Models.Transmission", "Transmission")
                         .WithMany()
@@ -1206,12 +1206,6 @@ namespace RentACar.Data.Migrations
             modelBuilder.Entity("RentACar.Data.Models.Make", b =>
                 {
                     b.Navigation("Vehicles");
-                });
-
-            modelBuilder.Entity("RentACar.Data.Models.Rental", b =>
-                {
-                    b.Navigation("Vehicle")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("RentACar.Data.Models.Vehicle", b =>
