@@ -62,6 +62,7 @@ namespace RentACar.Services.Data
 
 				vehicle.Rental = null;
 				vehicle.RentalId = null;
+				vehicle.Mileage += model.KilometersTraveled;
 				await vehicleRepository.UpdateAsync(vehicle);
 
 				return true;

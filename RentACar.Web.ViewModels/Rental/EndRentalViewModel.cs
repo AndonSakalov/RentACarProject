@@ -38,6 +38,9 @@ namespace RentACar.Web.ViewModels.Rental
 
 		[Required]
 		public PaymentStatus PaymentStatus { get; set; }
+
+		[Required]
+		public int KilometersTraveled { get; set; }
 	}
 
 	public class PaymentAmountValidationAttribute : ValidationAttribute

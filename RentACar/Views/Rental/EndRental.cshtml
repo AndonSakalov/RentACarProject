@@ -35,6 +35,11 @@
 			<input asp-for="PaymentAmount" class="form-control" placeholder="Payment amount..." />
 			<span asp-validation-for="@Model.PaymentAmount" class="text-danger"></span>
 		</div>
+		<div class="col-sm-6 mb-2">
+			<label asp-for="@Model.KilometersTraveled" class="form-label-add-edit">Select kilometers traveled...</label>
+			<input asp-for="KilometersTraveled" class="form-control" placeholder="Kilometers traveled for the rental..." />
+			<span asp-validation-for="@Model.KilometersTraveled" class="text-danger"></span>
+		</div>
 
 		<input type="hidden" asp-for="VehicleId" value="@Model.VehicleId" />
 		<input type="hidden" asp-for="RentalId" value="@Model.RentalId" />
@@ -44,6 +49,7 @@
 		<input type="hidden" asp-for="VehicleName" value="@Model.VehicleName" />
 		<input type="hidden" asp-for="PaymentId" value="@Model.PaymentId" />
 		<input type="hidden" asp-for="AmountRequired" value="@Model.AmountRequired" />
+		<input type="hidden" asp-for="KilometersTraveled" value="@Model.KilometersTraveled" />
 
 		<div class="mb-2">
 			<input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="End Rental" />
