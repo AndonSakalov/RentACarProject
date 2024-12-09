@@ -37,7 +37,6 @@ namespace RentACar.Services.Data
 			}
 
 
-			// Query rentals with related vehicle data
 			var rentalsQuery = rentalsRepository.GetAllAttached()
 				.Where(r => r.CustomerId == validUserId && r.VehicleId != Guid.Empty)
 				.Include(r => r.Vehicle.Make)
@@ -52,10 +51,8 @@ namespace RentACar.Services.Data
 					VehicleId = r.VehicleId
 				});
 
-			// Create a paginated list from the query
 			var paginatedRentals = await PaginatedList<RentalHistoryViewModel>.CreateAsync(rentalsQuery, pageIndex, pageSize);
 
-			// Create and return the UserAccountInfoViewModel
 			var model = new UserAccountInfoViewModel
 			{
 				Id = user.Id,
