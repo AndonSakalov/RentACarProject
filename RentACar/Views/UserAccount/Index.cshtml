@@ -1,0 +1,58 @@
+﻿@model RentACar.Web.ViewModels.UserAccountInfo.UserAccountInfoViewModel
+@{
+	ViewBag.Title = "Your account information:";
+}
+
+<div class="header">
+	<h1 class="found-branches-title">@ViewBag.Title</h1>
+</div>
+<div class="wrapper">
+	<div class="account-info">
+		<p>Email: @Model.Email</p>
+		<p>Username: @Model.UserName</p>
+		<p>Phone number: @Model.PhoneNumber</p>
+	</div>
+
+	<div class="account-rentals">
+		<h2>Your Rental History:</h2>
+		<div class="rentals-wrapper">
+			@if (Model.Rentals.Any())
+			{
+				foreach (var r in Model.Rentals)
+				{
+					<div class="account-rental-box">
+						<h4>Vehicle: @r.VehicleName</h4>
+						<p>Price: @r.RentalPrice</p>
+						<p>Starting date: @r.StartDate.ToShortDateString()</p>
+						<p>Ending date: @r.EndDate.ToShortDateString()</p>
+					</div>
+				}
+			}
+			else
+			{
+				<h2>No Rentals Found</h2>
+			}
+		</div>
+	</div>
+
+	@if (Model.Rentals.Any())
+	{
+		<div class="pagination-controls">
+			@if (Model.Rentals.HasPreviousPage)
+			{
+				<a asp-action="Index" asp-route-pageIndex="@(Model.Rentals.PageIndex - 1)" asp-route-pageSize="3">
+					Previous
+				</a>
+			}
+
+			<span>Page @Model.Rentals.PageIndex of @Model.Rentals.TotalPages</span>
+
+			@if (Model.Rentals.HasNextPage)
+			{
+				<a asp-action="Index" asp-route-pageIndex="@(Model.Rentals.PageIndex + 1)" asp-route-pageSize="3">
+					Next
+				</a>
+			}
+		</div>
+	}
+</div>

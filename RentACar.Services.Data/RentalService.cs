@@ -301,6 +301,7 @@ namespace RentACar.Services.Data
 				vehicle.RentalId = rental.Id;
 
 				rental.Vehicle = vehicle;
+				rental.VehicleId = vehicle.Id;
 				await rentalRepository.AddAsync(rental);
 
 				await vehicleRepository.UpdateAsync(vehicle);

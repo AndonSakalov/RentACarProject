@@ -338,3 +338,64 @@ div.card h-100 bg-bluegradient{
     margin-left:5em;
     margin-right:5em;
 }
+
+div.wrapper{
+    display:flex;
+    flex-direction:column;
+}
+
+div.account-info{
+    background-color:cornflowerblue;
+    display:flex;
+    justify-content:center;
+    align-content:center;
+    flex-direction:column;
+    align-self:center;
+    width:60vw;
+    border:2px solid black;
+}
+
+div.account-info p, h4{
+    align-self:center;
+    color:white;
+    font-size:1.5em;
+}
+
+div.account-rentals{
+    display:flex;
+    margin-top:3em;
+    flex-direction:column;
+}
+
+div.account-rentals h2{
+    align-self:center;
+    color:red;
+}
+
+div.account-rental-box {
+    background-color: chartreuse;
+    margin-left: 2em;
+    margin-right: 2em;
+    width: 30vw;
+    border: 2px solid black;
+}
+
+div.account-rental-box p{
+    font-size:1.2em;
+}
+
+div.pagination-controls span, a{
+    color:white;
+}
+
+div.rentals-wrapper{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+}
+
+div.pagination-controls{
+    display:flex;
+    justify-content:center;
+    font-size:1.3em;
+}

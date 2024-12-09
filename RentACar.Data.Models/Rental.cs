@@ -41,6 +41,9 @@ namespace RentACar.Data.Models
 		public Guid PaymentId { get; set; }
 		public virtual Payment Payment { get; set; } = null!;
 		public virtual Vehicle Vehicle { get; set; } = null!;
+
+		[Required]
+		public Guid VehicleId { get; set; }
 	}
 }
 

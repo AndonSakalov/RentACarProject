@@ -13,7 +13,7 @@ namespace RentACar.Data.Configurations
 
 			builder.HasOne(r => r.Vehicle)
 			   .WithOne(v => v.Rental)
-			   .HasForeignKey<Rental>(r => r.Id)
+			   .HasForeignKey<Rental>(r => r.VehicleId)
 			   .OnDelete(DeleteBehavior.NoAction);
 		}
 	}
