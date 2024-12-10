@@ -16,8 +16,17 @@ namespace RentACar.Services.Data
 		{
 			this.branchRepository = repository;
 		}
-		public async Task<IEnumerable<BranchViewModel>> GetAllOrderedByLocationAsync(SearchBranchViewModel model)
+		public async Task<IEnumerable<BranchViewModel>?> GetAllOrderedByLocationAsync(SearchBranchViewModel model)
 		{
+			bool isPickupDateValid = DateTime.TryParseExact(model.PickUpDate, RentalDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime validPickupDate);
+
+			bool isReturnDateValid = DateTime.TryParseExact(model.ReturnDate, RentalDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime validReturnDate);
+
+			if (!isPickupDateValid || !isReturnDateValid)
+			{
+				return null;
+			}
+
 			var foundBranches = await branchRepository.GetAllAttached()
 			   .Where(b => b.City == model.City)
 			   .Select(b => new BranchViewModel()
@@ -69,15 +78,6 @@ namespace RentACar.Services.Data
 			{
 				return null;
 			}
-			//var count = currentBranch.Vehicles.Where(v => v.Model == "RS 7"
-			//&& (v.Reservations.Any(r => (r.IsActive == false) || (r.PickUpDate.Date > validReturnDate && r.ReturnDate.Date < validPickupDate))))
-			//	.SelectMany(v => v.Reservations)
-			//	.ToList();
-
-			//var count1 = currentBranch.Vehicles.Where(v => v.Model == "RS 7")
-			//	.Select(v => v.RentalId)
-			//	.ToList();
-
 
 			List<VehicleTypeViewModel> vehicleTypes = currentBranch.Vehicles
 				.Where(v =>
@@ -97,10 +97,7 @@ namespace RentACar.Services.Data
 				 .Select(g => g.First())
 				 .ToList();
 
-
-
 			return vehicleTypes;
-
 		}
 
 		public async Task<IEnumerable<VehicleListViewModel>> GetAllVehiclesForCurrentBranchAsync(string id, string pickupDate, string returnDate, string vehicleTypeName)

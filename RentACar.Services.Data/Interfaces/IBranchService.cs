@@ -5,7 +5,7 @@ namespace RentACar.Services.Data.Interfaces
 	public interface IBranchService
 	{
 		Task<IEnumerable<AddVehicleBranchViewModel>> GetAllBranchesAsync();
-		Task<IEnumerable<BranchViewModel>> GetAllOrderedByLocationAsync(SearchBranchViewModel model);
+		Task<IEnumerable<BranchViewModel>?> GetAllOrderedByLocationAsync(SearchBranchViewModel model);
 
 		Task<IEnumerable<VehicleTypeViewModel>> GetAllVehicleTypesAsync(string id, string pickupDate, string returnDate);
 

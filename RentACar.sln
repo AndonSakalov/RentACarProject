@@ -17,11 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Common", "RentACar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Web.ViewModels", "RentACar.Web.ViewModels\RentACar.Web.ViewModels.csproj", "{E9CDD277-F14F-477D-932F-1376481CC397}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Web.Infrastructure", "RentACar.Web.Infrastructure\RentACar.Web.Infrastructure.csproj", "{DF0E6187-F503-4183-8708-4549D9A27D29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Web.Infrastructure", "RentACar.Web.Infrastructure\RentACar.Web.Infrastructure.csproj", "{DF0E6187-F503-4183-8708-4549D9A27D29}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{19C53F3E-4E98-42EE-B3F8-0E11C803B435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Services.Data", "RentACar.Services.Data\RentACar.Services.Data.csproj", "{468B8C28-8F9E-498A-8628-CF0753EB4451}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACar.Services.Data", "RentACar.Services.Data\RentACar.Services.Data.csproj", "{468B8C28-8F9E-498A-8628-CF0753EB4451}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACar.Tests", "UnitTests\RentACar.Tests.csproj", "{5B030778-3949-48DD-8A83-45E2ADCED8B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{468B8C28-8F9E-498A-8628-CF0753EB4451}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{468B8C28-8F9E-498A-8628-CF0753EB4451}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{468B8C28-8F9E-498A-8628-CF0753EB4451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B030778-3949-48DD-8A83-45E2ADCED8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B030778-3949-48DD-8A83-45E2ADCED8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B030778-3949-48DD-8A83-45E2ADCED8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B030778-3949-48DD-8A83-45E2ADCED8B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
