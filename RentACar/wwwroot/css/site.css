@@ -384,14 +384,18 @@ div.account-rental-box p{
     font-size:1.2em;
 }
 
-div.pagination-controls span, a{
+div.pagination-controls span, div.pagination-controls a{
     color:white;
 }
 
-div.rentals-wrapper{
-    display:flex;
-    flex-direction:row;
-    justify-content:center;
+div.pagination-controls a:hover{
+    color:mediumpurple;
+}
+
+div.rentals-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 div.pagination-controls{

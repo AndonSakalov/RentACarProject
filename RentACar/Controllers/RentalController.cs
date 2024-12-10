@@ -94,15 +94,24 @@ namespace RentACar.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Rent(ConfirmReservationViewModel model)
 		{
-			bool isSuccessful = await rentalService.SetReservationAsRental(model);
+			(bool isSuccessful, bool isVehicleFree) = await rentalService.SetReservationAsRental(model);
 
 			if (!isSuccessful)
 			{
+				if (!isVehicleFree)
+				{
+					TempData["Message"] = $"The vehicle is currently in a rental. You can not promote this reservation to rental.";
+					TempData["MessageType"] = "Error";
+
+					return RedirectToAction(nameof(ReservationsForCurrentBranch), new { model.BranchId });
+				}
+
 				TempData["Message"] = "Something went wrong while transforming this reservation to rental. Please contact system administration.";
 				TempData["MessageType"] = "Error";
 
 				return RedirectToAction("Index", "Home");
 			}
+
 			TempData["Message"] = $"You have successfully transferred the reservation to ongoing rental."; //TODO:give more info about the reservation
 			TempData["MessageType"] = "Success";
 

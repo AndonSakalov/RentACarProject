@@ -282,10 +282,15 @@ namespace RentACar.Services.Data
 			return await reservationRepository.UpdateAsync(reservation);
 		}
 
-		public async Task<bool> SetReservationAsRental(ConfirmReservationViewModel model)
+		public async Task<(bool isSuccessful, bool isVehicleFree)> SetReservationAsRental(ConfirmReservationViewModel model)
 		{
 			try
 			{
+				Vehicle vehicle = await vehicleRepository.GetByIdAsync(model.VehicleId);
+				if (vehicle.RentalId != null)
+				{
+					return (false, false);
+				}
 				Rental rental = new Rental()
 				{
 					CustomerId = model.CustomerId,
@@ -297,7 +302,7 @@ namespace RentACar.Services.Data
 					{
 					}
 				};
-				Vehicle vehicle = await vehicleRepository.GetByIdAsync(model.VehicleId);
+
 				vehicle.RentalId = rental.Id;
 
 				rental.Vehicle = vehicle;
@@ -317,11 +322,11 @@ namespace RentACar.Services.Data
 				await applicationUserRepository.UpdateAsync(user);
 
 
-				return true;
+				return (true, true);
 			}
 			catch (Exception ex)
 			{
-				return false;
+				return (false, true);
 			}
 		}
 
