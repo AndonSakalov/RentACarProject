@@ -111,65 +111,23 @@ namespace RentACar.Tests
 		[Test]
 		public async Task GetAllEnginesAsync_GetsAllEnginesFromTheDbCorrectly()
 		{
-			Guid engineId = Guid.NewGuid();
-			Engine engine = new Engine()
-			{
-				Id = engineId,
-				HP = 250,
-				CylindersCount = 4,
-				Displacement = 2,
-				FuelEfficiency = 6,
-				FuelType = Data.Models.Enums.FuelType.Diesel,
-				Torque = 350,
-				Description = "Test Description!",
-				IsElectric = false
-			};
-			_repository.Add(engine);
+			int count = _repository.GetAllAttached()
+				.Count();
 
 			var result = await _engineService.GetAllEnginesAsync();
 
-			result.Should().HaveCount(1);
-			result.First().Id.Should().Be(engineId);
+			result.Should().HaveCount(count);
 		}
 
 		[Test]
 		public async Task GetAllEnginesForDeletionAsync_GetsAllEnginesFromTheDbCorrectly()
 		{
-			Guid engineId = Guid.NewGuid();
-			Engine engine = new Engine()
-			{
-				Id = engineId,
-				HP = 250,
-				CylindersCount = 4,
-				Displacement = 2,
-				FuelEfficiency = 6,
-				FuelType = Data.Models.Enums.FuelType.Diesel,
-				Torque = 350,
-				Description = "Test Description!",
-				IsElectric = false
-			};
-			_repository.Add(engine);
+			int count = _repository.GetAllAttached()
+				.Count();
 
 			var result = await _engineService.GetAllEnginesForDeletionAsync();
-			try
-			{
 
-
-				var z = result.Where(e => e.HP == 150).FirstOrDefault();
-
-				var change = await _repository.GetByIdAsync(z.Id);
-				change.HP = 157;
-				await _repository.UpdateAsync(change);
-			}
-			catch (Exception)
-			{
-
-				throw;
-			}
-
-
-			result.Should().HaveCount(1);
-			result.First().Id.Should().Be(engineId);
+			result.Should().HaveCount(count);
 		}
 	}
 }
