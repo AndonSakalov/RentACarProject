@@ -35,7 +35,7 @@ namespace RentACar.Services.Data
 				   Name = b.Name,
 				   Address = b.Address,
 				   Country = b.Country,
-				   VehiclesCount = b.Vehicles.Where(v => v.IsDeleted == false).Count(), //overall vehicles for the branch
+				   VehiclesCount = b.Vehicles.Where(v => v.IsDeleted == false).Count(),
 				   PickUpDate = model.PickUpDate,
 				   ReturnDate = model.ReturnDate,
 			   })
@@ -88,7 +88,7 @@ namespace RentACar.Services.Data
 				 {
 					 Name = v.VehicleType.Name,
 					 Description = v.VehicleType.Description,
-					 ImageUrl = v.VehicleType.ImageUrl, //hmm
+					 ImageUrl = v.VehicleType.ImageUrl,
 					 PickUpDate = pickupDate,
 					 ReturnDate = returnDate,
 					 BranchId = id

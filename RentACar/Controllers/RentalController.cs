@@ -67,7 +67,7 @@ namespace RentACar.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			TempData["Message"] = $"You have successfully reserved the vehicle."; //TODO:give more info about the reservation
+			TempData["Message"] = $"You have successfully reserved the vehicle.";
 			TempData["MessageType"] = "Success";
 
 			return RedirectToAction("Index", "Home");
@@ -112,7 +112,7 @@ namespace RentACar.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			TempData["Message"] = $"You have successfully transferred the reservation to ongoing rental."; //TODO:give more info about the reservation
+			TempData["Message"] = $"You have successfully transferred the reservation to ongoing rental.";
 			TempData["MessageType"] = "Success";
 
 			return RedirectToAction(nameof(ReservationsForCurrentBranch), new { model.BranchId });

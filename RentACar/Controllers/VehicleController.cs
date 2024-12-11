@@ -79,7 +79,7 @@ namespace RentACar.Controllers
 
 			if (vehicles == null)
 			{
-				return NotFound(); //wrong data
+				return NotFound();
 			}
 			if (vehicles.Count() == 0)
 			{
@@ -102,7 +102,7 @@ namespace RentACar.Controllers
 
 			if (filteredVehicles == null)
 			{
-				return RedirectToAction(nameof(Vehicles)); //wrong data
+				return RedirectToAction(nameof(Vehicles));
 			}
 			if (filteredVehicles?.Count() == 0)
 			{
@@ -137,7 +137,7 @@ namespace RentACar.Controllers
 			bool isDeleted = await vehicleService.DeleteVehicleAsync(deleteModel);
 			if (!isDeleted)
 			{
-				return NotFound(); // not successful
+				return NotFound();
 			}
 
 			return RedirectToAction(nameof(Vehicles), new { branchId = deleteModel.BranchId.ToString() });
@@ -176,7 +176,7 @@ namespace RentACar.Controllers
 				return RedirectToAction("Index", "Home");
 			}
 
-			TempData["Message"] = $"You have successfully edited the vehicle."; //TODO:give more info about the change
+			TempData["Message"] = $"You have successfully edited the vehicle.";
 			TempData["MessageType"] = "Success";
 
 			return RedirectToAction("Index", "Home");

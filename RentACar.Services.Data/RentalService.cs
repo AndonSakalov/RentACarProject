@@ -168,7 +168,7 @@ namespace RentACar.Services.Data
 				.Include(b => b.Vehicles)
 				.ThenInclude(v => v.Reservations)
 				.ThenInclude(r => r.User)
-				.FirstOrDefaultAsync();   //changes
+				.FirstOrDefaultAsync();
 
 			if (branch == null)
 			{
