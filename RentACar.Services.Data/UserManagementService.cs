@@ -33,7 +33,7 @@ namespace RentACar.Services.Data
 			return false;
 		}
 
-		public async Task<SearchUserViewModel> SearchUsers(SearchUserViewModel model)
+		public async Task<SearchUserViewModel> SearchUsersAsync(SearchUserViewModel model)
 		{
 			var foundUser = await this.userManagementRepository.GetAllAttached()
 				.FirstOrDefaultAsync(u => u.Email == model.Email);

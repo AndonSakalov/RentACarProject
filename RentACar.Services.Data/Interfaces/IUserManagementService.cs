@@ -4,7 +4,7 @@ namespace RentACar.Services.Data.Interfaces
 {
 	public interface IUserManagementService
 	{
-		Task<SearchUserViewModel> SearchUsers(SearchUserViewModel model);
+		Task<SearchUserViewModel> SearchUsersAsync(SearchUserViewModel model);
 		Task<bool> PromoteToStaffMemberAsync(SearchUserViewModel model);
 	}
 }

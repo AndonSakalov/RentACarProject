@@ -23,7 +23,7 @@ namespace RentACar.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SearchUsers(SearchUserViewModel model)
 		{
-			model = await service.SearchUsers(model);
+			model = await service.SearchUsersAsync(model);
 
 			return View(model);
 		}

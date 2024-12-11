@@ -208,7 +208,6 @@ namespace RentACar.Tests
 
 			var result = await _userAccountInfoService.GetUserInfoAsync(customer.Id.ToString(), 1, 3);
 
-
 			result.isSuccessful.Should().BeTrue();
 			result.model.Should().NotBeNull();
 		}

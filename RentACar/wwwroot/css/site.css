@@ -24,6 +24,12 @@ body {
     background-size: 100vw 100vh;
 }
 
+body.error-background {
+    margin-bottom: 60px;
+    background-image: url(../img/error-background-image.jpg);
+    background-size:100vw 100vh;
+}
+
 div.row.text-center{
     background-color:black;
 }
@@ -402,4 +408,36 @@ div.pagination-controls{
     display:flex;
     justify-content:center;
     font-size:1.3em;
+}
+
+div.not-found{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:crimson;
+    flex-direction:column;
+    font-size:3em;
+    background-color:black;
+    opacity:0.8;
+}
+div.server-error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: crimson;
+    flex-direction: column;
+    font-size: 3em;
+    background-color: black;
+    opacity: 0.8;
+    margin-top:0.5em;
+}
+
+body.server-error-body {
+    margin-bottom: 60px;
+    background-image: url(../img/error-500-background-image.jpg);
+    background-size: 100vw 100vh;
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    align-items:center;
 }
