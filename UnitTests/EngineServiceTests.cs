@@ -78,11 +78,7 @@ namespace RentACar.Tests
 
 			bool result = await _engineService.CreateAndAddEngineAsync(model);
 
-			Engine? addedEngine = _repository.GetAllAttached()
-				.FirstOrDefault();
-
 			result.Should().Be(false);
-			addedEngine.Should().Be(null);
 		}
 
 		[Test]

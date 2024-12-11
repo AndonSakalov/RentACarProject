@@ -161,14 +161,14 @@ namespace RentACar.Services.Data
 				return (false, null);
 			}
 
-			Branch? branch = branchRepository.GetAllAttached()
+			Branch? branch = await branchRepository.GetAllAttached()
 				.Where(b => b.Id == validBranchId)
 				.Include(b => b.Vehicles)
 				.ThenInclude(v => v.Make)
 				.Include(b => b.Vehicles)
 				.ThenInclude(v => v.Reservations)
 				.ThenInclude(r => r.User)
-				.FirstOrDefault();
+				.FirstOrDefaultAsync();   //changes
 
 			if (branch == null)
 			{
@@ -216,12 +216,12 @@ namespace RentACar.Services.Data
 			return (true, model);
 		}
 
-		public async Task<(bool isSuccessful, EndRentalViewModel? model)> GetVehicleRentalToRemoveAsync(string id, string vehicleId)
+		public async Task<(bool isSuccessful, EndRentalViewModel? model)> GetVehicleRentalToRemoveAsync(string rentalId, string vehicleId)
 		{
 			Guid validRentalId = Guid.Empty;
 			Guid validVehicleId = Guid.Empty;
 			bool isVehicleGuidValid = IsGuidValid(vehicleId, ref validVehicleId);
-			bool isRentalGuidValid = IsGuidValid(id, ref validRentalId);
+			bool isRentalGuidValid = IsGuidValid(rentalId, ref validRentalId);
 			if (!isRentalGuidValid || !isVehicleGuidValid)
 			{
 				return (false, null);
@@ -267,7 +267,14 @@ namespace RentACar.Services.Data
 			{
 				return false;
 			}
-
+			if (applicationUserRepository.GetById(validUserId) == null)
+			{
+				return false;
+			}
+			if (vehicleRepository.GetById(model.Vehicle.Id) == null)
+			{
+				return false;
+			}
 			Reservation reservation = new Reservation()
 			{
 				UserId = validUserId,
