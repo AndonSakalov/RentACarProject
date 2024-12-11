@@ -278,7 +278,6 @@ namespace RentACar.Services.Data
 				return null;
 			}
 
-			//TODO:Cover the case where the guid is valid but no branch with that guid(the user changed the guid in the url)
 
 			var vehiclesToService = await vehicleRepository.GetAllAttached()
 				.Where(v => v.IsDeleted == false && v.ServicedAt + 10000 <= v.Mileage && v.BranchId == validGuid)
@@ -299,7 +298,6 @@ namespace RentACar.Services.Data
 
 		public async Task<(bool isSuccessful, ServiceVehicleViewModel model)> ServiceVehicleAsync(string branchId, string vehicleId)
 		{
-			//TODO:Cover the case where the guid is valid but no branch with that guid(the user changed the guid in the url)
 			Guid validBranchId = Guid.NewGuid();
 			Guid validVehicleId = Guid.NewGuid();
 

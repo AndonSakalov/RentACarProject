@@ -188,7 +188,7 @@ namespace RentACar.Controllers
 			var vehiclesForService = await vehicleService.GetVehiclesDueForServiceAsync(branchId);
 			if (vehiclesForService == null)
 			{
-				return NotFound(); //The branchId is not correct
+				return NotFound();
 			}
 			ViewData["BranchId"] = branchId;
 			return this.View(vehiclesForService);

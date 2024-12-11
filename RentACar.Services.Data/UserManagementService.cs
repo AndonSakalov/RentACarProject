@@ -20,7 +20,7 @@ namespace RentACar.Services.Data
 
 		public async Task<bool> PromoteToStaffMemberAsync(SearchUserViewModel model)
 		{
-			var user = await userManagementRepository.GetByIdAsync(model.UserId); //finish this
+			var user = await userManagementRepository.GetByIdAsync(model.UserId);
 			if (user != null)
 			{
 				var result = await userManager.AddToRoleAsync(user, "Staff");
